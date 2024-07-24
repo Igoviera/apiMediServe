@@ -1,24 +1,40 @@
 package com.MediServe.apiMediServe.controller;
 
+import com.MediServe.apiMediServe.dto.clinic.ResponseClinicDTO;
 import com.MediServe.apiMediServe.model.Clinic;
 import com.MediServe.apiMediServe.service.ClinicService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/mediServe/Clinic")
 public class ClinicController {
 
-    @Autowired
-    private ClinicService clinicService;
+    private final ClinicService clinicService;
 
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
+    public Clinic createClinic(@RequestBody @Valid Clinic clinic){
+        return clinicService.createClinic(clinic);
+    }
     @GetMapping
-    public List<Clinic> findAllClinic(){
+    public List<ResponseClinicDTO> findAllClinic(){
         return clinicService.findAllClinic();
     }
 
+    @GetMapping("/{id}")
+    public Clinic findByIdClinic(@PathVariable("id") Long id){
+        return  clinicService.findByIdClinic(id);
+    }
+
+    @PutMapping("/{clinicId}")
+    public Clinic updateClinic(@PathVariable("clinicId") Long clinicId, Clinic clinic){
+        return clinicService.updateClinic(clinicId, clinic);
+    }
 }
