@@ -1,11 +1,10 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.dto.clinic.ResponseClinicDTO;
+import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
 import com.MediServe.apiMediServe.model.Clinic;
 import com.MediServe.apiMediServe.service.ClinicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ public class ClinicController {
         return clinicService.createClinic(clinic);
     }
     @GetMapping
-    public List<ResponseClinicDTO> findAllClinic(){
+    public List<ClinicDTO> findAllClinic(){
         return clinicService.findAllClinic();
     }
 

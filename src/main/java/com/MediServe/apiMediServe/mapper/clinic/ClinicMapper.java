@@ -1,7 +1,6 @@
 package com.MediServe.apiMediServe.mapper.clinic;
 
-import com.MediServe.apiMediServe.dto.clinic.RequestClinicDTO;
-import com.MediServe.apiMediServe.dto.clinic.ResponseClinicDTO;
+import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
 import com.MediServe.apiMediServe.model.Clinic;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -12,12 +11,12 @@ import java.util.Collections;
 @AllArgsConstructor
 public class ClinicMapper {
 
-    public ResponseClinicDTO toDTO(Clinic clinic){
+    public ClinicDTO toDTO(Clinic clinic){
         if (clinic == null){
             return null;
         }
 
-        return new ResponseClinicDTO(
+        return new ClinicDTO(
                 clinic.getId(),
                 clinic.getName(),
                 clinic.getEmail(),
@@ -26,16 +25,16 @@ public class ClinicMapper {
         );
     }
 
-    public Clinic toEntity(RequestClinicDTO requestClinicDTO){
-        if (requestClinicDTO == null){
+    public Clinic toEntity(ClinicDTO clinicDTO){
+        if (clinicDTO == null){
             return null;
         }
 
         Clinic clinic = new Clinic();
-        clinic.setName(requestClinicDTO.name());
-        clinic.setEmail(requestClinicDTO.email());
-        clinic.setPhones(Collections.singletonList(requestClinicDTO.phone()));
-        clinic.setImgURL(requestClinicDTO.imgURL());
+        clinic.setName(clinicDTO.name());
+        clinic.setEmail(clinicDTO.email());
+        clinic.setPhones(Collections.singletonList(clinicDTO.phone()));
+        clinic.setImgURL(clinicDTO.imgURL());
 
         return clinic;
     }

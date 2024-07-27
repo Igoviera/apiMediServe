@@ -1,13 +1,12 @@
 package com.MediServe.apiMediServe.service.imp;
 
-import com.MediServe.apiMediServe.dto.clinic.ResponseClinicDTO;
+import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.mapper.clinic.ClinicMapper;
 import com.MediServe.apiMediServe.model.Clinic;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import com.MediServe.apiMediServe.service.ClinicService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class ClinicServiceImp implements ClinicService {
     }
 
     @Override
-    public List<ResponseClinicDTO> findAllClinic() {
+    public List<ClinicDTO> findAllClinic() {
         return clinicRepository.findAll().stream()
                 .map(clinic -> clinicMapper.toDTO(clinic))
                 .collect(Collectors.toList());
