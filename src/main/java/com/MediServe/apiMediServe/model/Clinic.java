@@ -29,5 +29,6 @@ public class Clinic {
     private LocalTime closingTime;
     @Column(name = "img_url")
     private String imgURL;
-    //private Address address;
+    @Embedded
+    private Address address;
 }
