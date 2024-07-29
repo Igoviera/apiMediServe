@@ -19,8 +19,8 @@ public class ClinicController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Clinic createClinic(@RequestBody @Valid Clinic clinic){
-        return clinicService.createClinic(clinic);
+    public ClinicDTO createClinic(@RequestBody @Valid ClinicDTO clinicDTO){
+        return clinicService.createClinic(clinicDTO);
     }
     @GetMapping
     public List<ClinicDTO> findAllClinic(){
@@ -28,12 +28,12 @@ public class ClinicController {
     }
 
     @GetMapping("/{id}")
-    public Clinic findByIdClinic(@PathVariable("id") Long id){
+    public ClinicDTO findByIdClinic(@PathVariable("id") Long id){
         return  clinicService.findByIdClinic(id);
     }
 
     @PutMapping("/{clinicId}")
-    public Clinic updateClinic(@PathVariable("clinicId") Long clinicId, Clinic clinic){
-        return clinicService.updateClinic(clinicId, clinic);
+    public ClinicDTO updateClinic(@Valid @PathVariable("clinicId") Long clinicId, @RequestBody ClinicDTO clinicDTO){
+        return clinicService.updateClinic(clinicId, clinicDTO);
     }
 }

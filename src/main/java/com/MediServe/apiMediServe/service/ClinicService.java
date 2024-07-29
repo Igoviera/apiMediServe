@@ -6,8 +6,8 @@ import com.MediServe.apiMediServe.model.Clinic;
 import java.util.List;
 
 public interface ClinicService {
-    Clinic createClinic(Clinic clinic);
+    ClinicDTO createClinic(ClinicDTO clinicDTO);
     List<ClinicDTO> findAllClinic();
-    Clinic findByIdClinic(Long id);
-    Clinic updateClinic(Long clinicId, Clinic clinic);
+    ClinicDTO findByIdClinic(Long id);
+    ClinicDTO updateClinic(Long clinicId, ClinicDTO clinicDTO);
 }

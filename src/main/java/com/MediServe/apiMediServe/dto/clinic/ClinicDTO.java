@@ -3,6 +3,8 @@ package com.MediServe.apiMediServe.dto.clinic;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
+import java.time.LocalTime;
+
 public record ClinicDTO(
         Long id,
         @NotEmpty(message = "O nome é obrigatório")
@@ -12,6 +14,8 @@ public record ClinicDTO(
         String email,
         @NotEmpty(message = "O telefone é obrigatório")
         String phone,
+        String openingTime,
+        String closingTime,
         String imgURL
 ){}
 

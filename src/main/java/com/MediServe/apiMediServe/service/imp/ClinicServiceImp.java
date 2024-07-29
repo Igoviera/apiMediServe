@@ -17,12 +17,11 @@ import java.util.stream.Collectors;
 public class ClinicServiceImp implements ClinicService {
 
     private final ClinicRepository clinicRepository;
-
     private final ClinicMapper clinicMapper;
 
     @Override
-    public Clinic createClinic(Clinic clinic) {
-       return clinicRepository.save(clinic);
+    public ClinicDTO createClinic(ClinicDTO clinicDTO) {
+        return clinicMapper.toDTO(clinicRepository.save(clinicMapper.toEntity(clinicDTO)));
     }
 
     @Override
@@ -33,19 +32,23 @@ public class ClinicServiceImp implements ClinicService {
     }
 
     @Override
-    public Clinic findByIdClinic(Long id) {
-        return clinicRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id));
+    public ClinicDTO findByIdClinic(Long id) {
+        return clinicMapper.toDTO(clinicRepository.findById(id).
+                orElseThrow(() -> new RecordNotFoundException(id)));
+
     }
 
     @Override
-    public Clinic updateClinic(Long clinicId, Clinic clinic) {
-        Clinic clinic1 = findByIdClinic(clinicId);
-        clinic1.setName(clinic.getName());
-        clinic1.setEmail(clinic.getEmail());
-        clinic1.setPhones(clinic.getPhones());
-
-        return clinicRepository.save(clinic1);
-
+    public ClinicDTO updateClinic(Long clinicId, ClinicDTO clinicDTO) {
+        return clinicRepository.findById(clinicId)
+                .map(recordFound -> {
+                    Clinic updateClinic = clinicMapper.toEntity(clinicDTO);
+                    recordFound.setName(updateClinic.getName());
+                    recordFound.setEmail(updateClinic.getEmail());
+                    recordFound.setPhone(updateClinic.getPhone());
+                    recordFound.setOpeningTime(updateClinic.getOpeningTime());
+                    recordFound.setClosingTime(updateClinic.getClosingTime());
+                    return clinicMapper.toDTO(clinicRepository.save(recordFound));
+                }).orElseThrow(() -> new RecordNotFoundException(clinicId));
     }
 }

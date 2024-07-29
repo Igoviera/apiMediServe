@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -23,7 +24,10 @@ public class Clinic {
     @NotEmpty(message = "O e-mail é obrigatório")
     @Column(unique = true)
     private String email;
-    private List<String> phones;
+    private String phone;
+    private LocalTime openingTime;
+    private LocalTime closingTime;
+    @Column(name = "img_url")
     private String imgURL;
     //private Address address;
 }
