@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.service.imp;
 
+import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Clinic;
 import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.model.OpeningHours;
@@ -48,5 +49,11 @@ public class DoctorServiceImp implements DoctorService {
     @Override
     public List<Doctor> getAllDoctor() {
         return doctorRepository.findAll();
+    }
+
+    @Override
+    public Doctor getByIdDoctor(Long id) {
+        return doctorRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id));
     }
 }

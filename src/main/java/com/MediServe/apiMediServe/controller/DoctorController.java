@@ -23,4 +23,9 @@ public class DoctorController {
     public List<Doctor> getAllDoctor(){
         return doctorService.getAllDoctor();
     }
+
+    @GetMapping("/{id}")
+    public Doctor getByIdDoctor(@PathVariable("id") Long id){
+        return doctorService.getByIdDoctor(id);
+    }
 }
