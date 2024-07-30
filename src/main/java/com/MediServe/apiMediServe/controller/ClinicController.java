@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/mediServe/Clinic")
+@RequestMapping("/api/mediServe/clinic")
 public class ClinicController {
 
     private final ClinicService clinicService;

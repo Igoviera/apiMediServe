@@ -31,4 +31,7 @@ public class Clinic {
     private String imgURL;
     @Embedded
     private Address address;
+
+    @OneToMany(mappedBy = "clinic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Doctor> doctors;
 }

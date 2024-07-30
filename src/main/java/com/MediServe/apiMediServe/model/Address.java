@@ -14,13 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Embeddable
 public class Address {
-    @NotEmpty(message = "Campo cep é obrigatório")
-    @Column(nullable = false)
     private String cep;
-
-    @NotEmpty(message = "Campo logradouro é obrigatório")
     private String logradouro;
-
-    @NotEmpty(message = "Campo número é obrigatório")
     private String locationNumber;
 }

@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,8 @@ public class Doctor {
     private String cpf;
     private String phone;
     private BigDecimal queryValue;
+    @Embedded
+    private Address address;
 
     @ManyToMany
     @JoinTable(
@@ -34,7 +37,11 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<OpeningHours> openingHours;
-    @Embedded
-    private Address address;
+
     private boolean status;
+
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private Clinic clinic;
 }

@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,5 +21,6 @@ public class Specialty {
     private String name;
 
     @ManyToMany(mappedBy = "specialties")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Doctor> doctors;
 }
