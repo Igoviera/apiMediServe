@@ -17,9 +17,13 @@ public class SpecialtyController {
     public Specialty createSpecialty(@RequestBody Specialty specialty){
         return specialtyService.createSpecialty(specialty);
     }
-
     @GetMapping
     public List<Specialty> getAllSpecialty(){
         return specialtyService.getAllSpecialty();
+    }
+
+    @GetMapping("/{id}")
+    public Specialty getByIdSpecialty(@PathVariable("id") Long id){
+        return specialtyService.getByIdSpecialty(id);
     }
 }
