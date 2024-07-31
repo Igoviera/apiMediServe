@@ -8,4 +8,5 @@ public interface SpecialtyService {
     Specialty createSpecialty(Specialty specialty);
     List<Specialty> getAllSpecialty();
     Specialty getByIdSpecialty(Long id);
+    Specialty updateSpecialty(Long id, Specialty specialty);
 }

@@ -29,4 +29,12 @@ public class SpecialtyServiceImp implements SpecialtyService {
         return specialtyRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(id));
     }
+
+    @Override
+    public Specialty updateSpecialty(Long id, Specialty specialty) {
+        Specialty specialty1 = getByIdSpecialty(id);
+        specialty1.setName(specialty.getName());
+
+        return specialtyRepository.save(specialty1);
+    }
 }

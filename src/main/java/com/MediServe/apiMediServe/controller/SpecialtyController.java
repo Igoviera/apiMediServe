@@ -26,4 +26,8 @@ public class SpecialtyController {
     public Specialty getByIdSpecialty(@PathVariable("id") Long id){
         return specialtyService.getByIdSpecialty(id);
     }
+    @PutMapping("/{id}")
+    public  Specialty updateSpecialty(@PathVariable("id") Long id, Specialty specialty){
+         return specialtyService.updateSpecialty(id, specialty);
+    }
 }
