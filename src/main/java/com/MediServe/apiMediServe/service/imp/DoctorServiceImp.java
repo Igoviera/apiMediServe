@@ -45,7 +45,6 @@ public class DoctorServiceImp implements DoctorService {
 
         return doctorRepository.save(doctor);
     }
-
     @Override
     public List<Doctor> getAllDoctor() {
         return doctorRepository.findAll();
@@ -55,5 +54,21 @@ public class DoctorServiceImp implements DoctorService {
     public Doctor getByIdDoctor(Long id) {
         return doctorRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(id));
+    }
+
+    @Override
+    public Doctor updateDoctor(Long id, Doctor doctor) {
+        return doctorRepository.findById(id)
+                .map(existDoctor -> {
+                    existDoctor.setName(doctor.getName());
+                    existDoctor.setImgUrl(doctor.getImgUrl());
+                    existDoctor.setCrm(doctor.getCrm());
+                    existDoctor.setCpf(doctor.getCpf());
+                    existDoctor.setPhone(doctor.getPhone());
+                    existDoctor.setQueryValue(doctor.getQueryValue());
+                    existDoctor.setAddress(doctor.getAddress());
+
+                    return doctorRepository.save(existDoctor);
+                }).orElseThrow(() -> new RecordNotFoundException(id));
     }
 }

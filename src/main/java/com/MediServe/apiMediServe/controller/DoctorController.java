@@ -18,14 +18,16 @@ public class DoctorController {
     public Doctor createDoctor(@RequestBody Doctor doctor){
         return doctorService.createDoctor(doctor);
     }
-
     @GetMapping
     public List<Doctor> getAllDoctor(){
         return doctorService.getAllDoctor();
     }
-
     @GetMapping("/{id}")
     public Doctor getByIdDoctor(@PathVariable("id") Long id){
         return doctorService.getByIdDoctor(id);
+    }
+    @PutMapping("/{id}")
+    public Doctor updateDoctor(@PathVariable("id") Long id, @RequestBody Doctor doctor){
+        return doctorService.updateDoctor(id, doctor);
     }
 }

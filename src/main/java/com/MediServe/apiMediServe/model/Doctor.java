@@ -20,6 +20,7 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
+    private String imgUrl;
     private String crm;
     private String cpf;
     private String phone;
