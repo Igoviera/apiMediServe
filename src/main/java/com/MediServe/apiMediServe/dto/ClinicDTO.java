@@ -1,4 +1,4 @@
-package com.MediServe.apiMediServe.dto.clinic;
+package com.MediServe.apiMediServe.dto;
 
 import com.MediServe.apiMediServe.model.Doctor;
 import jakarta.validation.constraints.Email;

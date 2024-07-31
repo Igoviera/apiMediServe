@@ -45,4 +45,11 @@ public class Doctor {
     @JoinColumn(name = "clinic_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Clinic clinic;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Patient> patients;
 }

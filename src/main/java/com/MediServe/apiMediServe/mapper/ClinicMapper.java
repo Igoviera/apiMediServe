@@ -1,6 +1,6 @@
-package com.MediServe.apiMediServe.mapper.clinic;
+package com.MediServe.apiMediServe.mapper;
 
-import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
+import com.MediServe.apiMediServe.dto.ClinicDTO;
 import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
 import com.MediServe.apiMediServe.model.Clinic;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Collections;
 
 @Component
 @AllArgsConstructor

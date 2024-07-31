@@ -1,8 +1,8 @@
 package com.MediServe.apiMediServe.service.imp;
 
-import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
+import com.MediServe.apiMediServe.dto.ClinicDTO;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
-import com.MediServe.apiMediServe.mapper.clinic.ClinicMapper;
+import com.MediServe.apiMediServe.mapper.ClinicMapper;
 import com.MediServe.apiMediServe.model.Clinic;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import com.MediServe.apiMediServe.service.ClinicService;

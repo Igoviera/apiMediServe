@@ -1,7 +1,6 @@
 package com.MediServe.apiMediServe.service;
 
-import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
-import com.MediServe.apiMediServe.model.Clinic;
+import com.MediServe.apiMediServe.dto.ClinicDTO;
 
 import java.util.List;
 
