@@ -1,4 +1,4 @@
-package com.MediServe.apiMediServe.mapper;
+package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.ClinicDTO;
 import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;

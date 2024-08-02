@@ -1,4 +1,4 @@
-package com.MediServe.apiMediServe.mapper;
+package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.PatientDTO;
 import com.MediServe.apiMediServe.model.Patient;
@@ -15,8 +15,6 @@ public class PatientMapper {
 
         return new PatientDTO(
                 patient.getId(),
-                patient.getUser().getUsername(),
-                patient.getUser().getPassword(),
                 patient.getName(),
                 patient.getCpf(),
                 patient.getSex(),
@@ -37,7 +35,6 @@ public class PatientMapper {
         patient.setSex(patientDTO.sex());
         patient.setPhone(patientDTO.phone());
         patient.setBirthDate(patientDTO.birthDate());
-
         return patient;
     }
 }

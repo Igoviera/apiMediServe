@@ -11,7 +11,7 @@ public record DoctorDTO(
         String cpf,
         String phone,
         BigDecimal queryValue,
-        AddressDTO address,
+        AddressDTO addressDTO,
         List<SpecialtyDTO> specialties,
         List<OpeningHoursDTO> openingHours,
         ClinicDTO clinic,

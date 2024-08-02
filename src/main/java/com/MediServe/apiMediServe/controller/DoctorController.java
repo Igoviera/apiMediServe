@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/mediServe/doctor")
+@RequestMapping("/api/mediServe/doctors")
 public class DoctorController {
 
     private final DoctorService doctorService;

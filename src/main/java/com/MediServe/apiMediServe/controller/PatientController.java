@@ -11,7 +11,7 @@ import javax.swing.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/mediServe/patient")
+@RequestMapping("/api/mediServe/patients")
 public class PatientController {
     private final PatientService patientService;
 

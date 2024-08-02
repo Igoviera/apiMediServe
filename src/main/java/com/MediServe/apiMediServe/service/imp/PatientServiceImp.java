@@ -1,7 +1,7 @@
 package com.MediServe.apiMediServe.service.imp;
 
 import com.MediServe.apiMediServe.dto.PatientDTO;
-import com.MediServe.apiMediServe.mapper.PatientMapper;
+import com.MediServe.apiMediServe.dto.mapper.PatientMapper;
 import com.MediServe.apiMediServe.model.Patient;
 import com.MediServe.apiMediServe.model.User;
 import com.MediServe.apiMediServe.repository.PatientRepository;
