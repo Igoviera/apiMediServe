@@ -8,5 +8,7 @@ public record PatientDTO(
         String cpf,
         String sex,
         String phone,
-        LocalDate birthDate
+        LocalDate birthDate,
+        AddressDTO address,
+        Long userId
 ) {}

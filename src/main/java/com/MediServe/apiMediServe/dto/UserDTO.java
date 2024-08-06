@@ -9,7 +9,7 @@ public record UserDTO(
         Long id,
         String username,
         String password,
-        UserRole role,
-        PatientDTO patientDTO,
-        DoctorDTO doctorDTO
+        UserRole roles,
+        Long patientId,
+        Long doctorId
 ) {}

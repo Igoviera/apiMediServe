@@ -3,8 +3,9 @@ package com.MediServe.apiMediServe.dto;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record DoctorDTO(
-        Long id,
+public record DoctorRegistrationDTO(
+        String username,
+        String password,
         String name,
         String imgUrl,
         String crm,
@@ -12,9 +13,7 @@ public record DoctorDTO(
         String phone,
         BigDecimal queryValue,
         AddressDTO address,
-        List<Long> specialtyIds,
+        List<Long> specialties,
         List<OpeningHoursDTO> openingHours,
-        Long clinicId,
-        Long userId,
-        boolean status
+        Long clinicId
 ) {}

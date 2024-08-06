@@ -12,5 +12,5 @@ public record OpeningHoursDTO(
         DiaDaSemana dayOfWeek,
         LocalTime startTime,
         LocalTime endTime,
-        DoctorDTO doctorDTO
+        Long doctorId
 ) {}

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class OpeningHoursMapper {
-    private final DoctorMapper doctorMapper;
-
     public OpeningHoursDTO toDTO(OpeningHours openingHours){
         if (openingHours == null) {
             return null;
@@ -20,7 +18,7 @@ public class OpeningHoursMapper {
                 openingHours.getDayOfWeek(),
                 openingHours.getStartTime(),
                 openingHours.getEndTime(),
-                doctorMapper.toDTO(openingHours.getDoctor())
+                null
         );
     }
 
@@ -33,7 +31,6 @@ public class OpeningHoursMapper {
         openingHours.setDayOfWeek(openingHoursDTO.dayOfWeek());
         openingHours.setStartTime(openingHoursDTO.startTime());
         openingHours.setEndTime(openingHoursDTO.endTime());
-        openingHours.setDoctor(doctorMapper.toEntity(openingHoursDTO.doctorDTO()));
 
         return openingHours;
     }

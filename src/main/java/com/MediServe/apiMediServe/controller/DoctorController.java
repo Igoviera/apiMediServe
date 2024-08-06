@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.controller;
 
+import com.MediServe.apiMediServe.dto.DoctorDTO;
 import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.service.DoctorService;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +15,6 @@ public class DoctorController {
 
     private final DoctorService doctorService;
 
-    @PostMapping
-    public Doctor createDoctor(@RequestBody Doctor doctor){
-        return doctorService.createDoctor(doctor);
-    }
     @GetMapping
     public List<Doctor> getAllDoctor(){
         return doctorService.getAllDoctor();

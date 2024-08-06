@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,7 +38,7 @@ public class Doctor {
     private List<Specialty> specialties;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<OpeningHours> openingHours;
+    private List<OpeningHours> openingHours = new ArrayList<>();
 
     private boolean status;
 
@@ -51,5 +52,5 @@ public class Doctor {
     private User user;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Patient> patients;
+    private List<Patient> patients = new ArrayList<>();
 }

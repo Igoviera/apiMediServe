@@ -1,24 +1,29 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.DoctorDTO;
+import com.MediServe.apiMediServe.dto.OpeningHoursDTO;
+import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Doctor;
+import com.MediServe.apiMediServe.model.OpeningHours;
+import com.MediServe.apiMediServe.model.Specialty;
+import com.MediServe.apiMediServe.repository.ClinicRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 public class DoctorMapper {
 
-    private final AddressMapper addressMapper;
-    private final SpecialtyMapper specialtyMapper;
-    private final OpeningHoursMapper openingHoursMapper;
-    private final ClinicMapper clinicMapper;
-    private final UserMapper userMapper;
+    private final ClinicRepository clinicRepository;
 
-    public DoctorDTO toDTO(Doctor doctor){
-        if (doctor == null){
+    private final AddressMapper addressMapper;
+    private final ClinicMapper clinicMapper;
+
+    public DoctorDTO toDTO(Doctor doctor) {
+        if (doctor == null) {
             return null;
         }
 
@@ -32,19 +37,24 @@ public class DoctorMapper {
                 doctor.getQueryValue(),
                 addressMapper.toDTO(doctor.getAddress()),
                 doctor.getSpecialties().stream()
-                        .map(specialty -> specialtyMapper.toDTO(specialty))
+                        .map(Specialty::getId)
                         .collect(Collectors.toList()),
                 doctor.getOpeningHours().stream()
-                        .map(openingHours -> openingHoursMapper.toDTO(openingHours))
+                        .map(openingHours -> new OpeningHoursDTO(
+                                openingHours.getId(),
+                                openingHours.getDayOfWeek(),
+                                openingHours.getStartTime(),
+                                openingHours.getEndTime(),
+                                doctor.getId()))
                         .collect(Collectors.toList()),
-                clinicMapper.toDTO(doctor.getClinic()),
-                userMapper.toDTO(doctor.getUser()),
+                doctor.getClinic().getId(),
+                doctor.getUser() != null ? doctor.getUser().getId() : null,
                 doctor.isStatus()
         );
     }
 
-    public Doctor toEntity(DoctorDTO doctorDTO){
-        if (doctorDTO == null){
+    public Doctor toEntity(DoctorDTO doctorDTO) {
+        if (doctorDTO == null) {
             return null;
         }
 
@@ -55,15 +65,17 @@ public class DoctorMapper {
         doctor.setCpf(doctorDTO.cpf());
         doctor.setPhone(doctorDTO.phone());
         doctor.setQueryValue(doctorDTO.queryValue());
-        doctor.setAddress(addressMapper.toEntity(doctorDTO.addressDTO()));
-        doctor.setSpecialties(doctorDTO.specialties().stream()
-                .map(specialtyDTO -> specialtyMapper.toEntity(specialtyDTO))
-                .collect(Collectors.toList()));
+        doctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
+        doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())
+                .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId())));
         doctor.setOpeningHours(doctorDTO.openingHours().stream()
-                .map(openingHoursDTO -> openingHoursMapper.toEntity(openingHoursDTO))
+                .map(openingHoursDTO -> new OpeningHours(
+                        openingHoursDTO.id(),
+                        openingHoursDTO.dayOfWeek(),
+                        openingHoursDTO.startTime(),
+                        openingHoursDTO.endTime(),
+                        doctor))
                 .collect(Collectors.toList()));
-        doctor.setClinic(clinicMapper.toEntity(doctorDTO.clinic()));
-        doctor.setUser(userMapper.toEntity(doctorDTO.user()));
         doctor.setStatus(doctorDTO.status());
 
         return doctor;

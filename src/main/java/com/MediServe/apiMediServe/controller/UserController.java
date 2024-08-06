@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.controller;
 
+import com.MediServe.apiMediServe.dto.UserDTO;
 import com.MediServe.apiMediServe.model.User;
 import com.MediServe.apiMediServe.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +14,9 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping
-    public User createUser(@RequestBody User user){
-        return userService.createUser(user);
+    @PostMapping("/register")
+    public UserDTO createUser(@RequestBody UserDTO userDTO){
+        return userService.createUser(userDTO);
     }
     @GetMapping
     public List<User> getAllUser(){

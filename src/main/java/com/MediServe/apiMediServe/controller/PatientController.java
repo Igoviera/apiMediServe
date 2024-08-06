@@ -14,10 +14,4 @@ import javax.swing.*;
 @RequestMapping("/api/mediServe/patients")
 public class PatientController {
     private final PatientService patientService;
-
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PatientDTO createPatient(@RequestBody PatientDTO patientDTO){
-        return patientService.createPatient(patientDTO);
-    }
 }

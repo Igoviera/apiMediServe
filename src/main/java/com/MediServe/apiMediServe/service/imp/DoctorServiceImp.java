@@ -1,13 +1,15 @@
 package com.MediServe.apiMediServe.service.imp;
 
+import com.MediServe.apiMediServe.dto.DoctorDTO;
+import com.MediServe.apiMediServe.dto.mapper.ClinicMapper;
+import com.MediServe.apiMediServe.dto.mapper.DoctorMapper;
+import com.MediServe.apiMediServe.dto.mapper.UserMapper;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
-import com.MediServe.apiMediServe.model.Clinic;
-import com.MediServe.apiMediServe.model.Doctor;
-import com.MediServe.apiMediServe.model.OpeningHours;
-import com.MediServe.apiMediServe.model.Specialty;
+import com.MediServe.apiMediServe.model.*;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import com.MediServe.apiMediServe.repository.DoctorRepository;
 import com.MediServe.apiMediServe.repository.SpecialtyRepository;
+import com.MediServe.apiMediServe.repository.UserRespository;
 import com.MediServe.apiMediServe.service.DoctorService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -23,27 +25,47 @@ public class DoctorServiceImp implements DoctorService {
     private final DoctorRepository doctorRepository;
     private final SpecialtyRepository specialtyRepository;
     private final ClinicRepository clinicRepository;
+    private final UserRespository userRespository;
+
+    private final ClinicMapper clinicMapper;
+    private final DoctorMapper doctorMapper;
+    private final UserMapper userMapper;
 
     @Override
     @Transactional
-    public Doctor createDoctor(Doctor doctor) {
-        Clinic clinic = clinicRepository.findById(doctor.getClinic().getId())
-                .orElseThrow(() -> new RuntimeException("Clinica não encontrada com o id " + doctor.getClinic().getId()));
+    public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
+        Doctor doctor = doctorMapper.toEntity(doctorDTO);
+
+        // Validar e associar a clínica
+        Clinic clinic = clinicRepository.findById(doctorDTO.clinicId())
+                .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId()));
         doctor.setClinic(clinic);
 
-        List<Specialty> specialties = doctor.getSpecialties().stream()
-                .map(specialty -> specialtyRepository.findById(specialty.getId())
-                        .orElseThrow(() -> new RuntimeException("Especialidade não encontrada com id " + specialty.getId())))
+        // Validar e associar as especialidades
+        List<Specialty> specialties = doctorDTO.specialtyIds().stream()
+                .map(specialtyId -> specialtyRepository.findById(specialtyId)
+                        .orElseThrow(() -> new RecordNotFoundException(specialtyId)))
                 .collect(Collectors.toList());
-
         doctor.setSpecialties(specialties);
 
-        List<OpeningHours> openingHoursList = doctor.getOpeningHours();
-        for (OpeningHours openingHours : openingHoursList){
-            openingHours.setDoctor(doctor);
-        }
+        // Associar as horas de funcionamento
+        Doctor finalDoctor = doctor;
+        doctor.setOpeningHours(doctorDTO.openingHours().stream()
+                .map(openingHoursDTO -> new OpeningHours(
+                        openingHoursDTO.id(),
+                        openingHoursDTO.dayOfWeek(),
+                        openingHoursDTO.startTime(),
+                        openingHoursDTO.endTime(),
+                        finalDoctor))
+                .collect(Collectors.toList()));
 
-        return doctorRepository.save(doctor);
+        // Buscar e associar o usuário
+        User user = userRespository.findById(doctorDTO.userId())
+                .orElseThrow(() -> new RecordNotFoundException(doctorDTO.userId()));
+        doctor.setUser(user);
+
+        // Salvar o médico
+        return doctorMapper.toDTO(doctorRepository.save(doctor));
     }
     @Override
     public List<Doctor> getAllDoctor() {
