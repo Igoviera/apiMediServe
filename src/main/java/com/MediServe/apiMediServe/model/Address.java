@@ -14,10 +14,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Embeddable
 public class Address {
+    @NotEmpty(message = "O CEP é obrigatório")
     private String cep;
+    @NotEmpty(message = "O nome da rua é obrigatório")
     private String logradouro;
+    @NotEmpty(message = "O Número é obrigatório")
     private String locationNumber;
-//    private String neighborhood;
-//    private String city;
-//    private String state;
+    @NotEmpty(message = "O bairro é obrigatório")
+    private String neighborhood;
+    @NotEmpty(message = "A cidade é obrigatório")
+    private String city;
+    @NotEmpty(message = "O estado é obrigatório")
+    private String state;
 }
