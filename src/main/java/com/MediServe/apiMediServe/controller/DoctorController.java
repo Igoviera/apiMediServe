@@ -16,7 +16,7 @@ public class DoctorController {
     private final DoctorService doctorService;
 
     @GetMapping
-    public List<Doctor> getAllDoctor(){
+    public List<DoctorDTO> getAllDoctor(){
         return doctorService.getAllDoctor();
     }
     @GetMapping("/{id}")

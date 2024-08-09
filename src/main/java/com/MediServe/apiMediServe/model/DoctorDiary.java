@@ -1,6 +1,6 @@
 package com.MediServe.apiMediServe.model;
 
-import com.MediServe.apiMediServe.enums.DiaDaSemana;
+import com.MediServe.apiMediServe.enums.DayOfTheWeek;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,18 +15,20 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OpeningHours {
+public class DoctorDiary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Enumerated(EnumType.STRING)
-    private DiaDaSemana dayOfWeek;
+    private DayOfTheWeek dayOfWeek;
     private LocalTime startTime;
     private LocalTime endTime;
+    //private int limitPatients;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Doctor doctor;
+
 }
 

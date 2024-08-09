@@ -8,10 +8,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/mediServe/patients")
 public class PatientController {
     private final PatientService patientService;
+
+    @GetMapping
+    public List<PatientDTO> findAllPatients(){
+        return patientService.findAllPatients();
+    }
 }

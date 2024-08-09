@@ -4,13 +4,12 @@ import com.MediServe.apiMediServe.dto.DoctorDTO;
 import com.MediServe.apiMediServe.dto.OpeningHoursDTO;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Doctor;
-import com.MediServe.apiMediServe.model.OpeningHours;
+import com.MediServe.apiMediServe.model.DoctorDiary;
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
@@ -39,7 +38,7 @@ public class DoctorMapper {
                 doctor.getSpecialties().stream()
                         .map(Specialty::getId)
                         .collect(Collectors.toList()),
-                doctor.getOpeningHours().stream()
+                doctor.getDoctorDiaries().stream()
                         .map(openingHours -> new OpeningHoursDTO(
                                 openingHours.getId(),
                                 openingHours.getDayOfWeek(),
@@ -68,8 +67,8 @@ public class DoctorMapper {
         doctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
         doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId())));
-        doctor.setOpeningHours(doctorDTO.openingHours().stream()
-                .map(openingHoursDTO -> new OpeningHours(
+        doctor.setDoctorDiaries(doctorDTO.openingHours().stream()
+                .map(openingHoursDTO -> new DoctorDiary(
                         openingHoursDTO.id(),
                         openingHoursDTO.dayOfWeek(),
                         openingHoursDTO.startTime(),

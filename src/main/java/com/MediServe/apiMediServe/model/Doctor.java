@@ -38,7 +38,7 @@ public class Doctor {
     private List<Specialty> specialties;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<OpeningHours> openingHours = new ArrayList<>();
+    private List<DoctorDiary> doctorDiaries = new ArrayList<>();
 
     private boolean status;
 
@@ -53,4 +53,7 @@ public class Doctor {
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Patient> patients = new ArrayList<>();
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<Scheduling> schedulings;
 }

@@ -17,4 +17,7 @@ public class Address {
     private String cep;
     private String logradouro;
     private String locationNumber;
+//    private String neighborhood;
+//    private String city;
+//    private String state;
 }

@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -38,7 +39,9 @@ public class PatientServiceImp implements PatientService {
     }
 
     @Override
-    public List<Patient> getAllPatient() {
-        return null;
+    public List<PatientDTO> findAllPatients() {
+        return patientRepository.findAll().stream()
+                .map(patient -> patientMapper.toDTO(patient))
+                .collect(Collectors.toList());
     }
 }

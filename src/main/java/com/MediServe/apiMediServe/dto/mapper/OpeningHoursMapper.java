@@ -1,37 +1,37 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.OpeningHoursDTO;
-import com.MediServe.apiMediServe.model.OpeningHours;
+import com.MediServe.apiMediServe.model.DoctorDiary;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
 public class OpeningHoursMapper {
-    public OpeningHoursDTO toDTO(OpeningHours openingHours){
-        if (openingHours == null) {
+    public OpeningHoursDTO toDTO(DoctorDiary doctorDiary){
+        if (doctorDiary == null) {
             return null;
         }
 
         return new OpeningHoursDTO(
-                openingHours.getId(),
-                openingHours.getDayOfWeek(),
-                openingHours.getStartTime(),
-                openingHours.getEndTime(),
+                doctorDiary.getId(),
+                doctorDiary.getDayOfWeek(),
+                doctorDiary.getStartTime(),
+                doctorDiary.getEndTime(),
                 null
         );
     }
 
-    public OpeningHours toEntity(OpeningHoursDTO openingHoursDTO){
+    public DoctorDiary toEntity(OpeningHoursDTO openingHoursDTO){
         if (openingHoursDTO == null) {
             return null;
         }
 
-        OpeningHours openingHours = new OpeningHours();
-        openingHours.setDayOfWeek(openingHoursDTO.dayOfWeek());
-        openingHours.setStartTime(openingHoursDTO.startTime());
-        openingHours.setEndTime(openingHoursDTO.endTime());
+        DoctorDiary doctorDiary = new DoctorDiary();
+        doctorDiary.setDayOfWeek(openingHoursDTO.dayOfWeek());
+        doctorDiary.setStartTime(openingHoursDTO.startTime());
+        doctorDiary.setEndTime(openingHoursDTO.endTime());
 
-        return openingHours;
+        return doctorDiary;
     }
 }

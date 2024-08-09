@@ -8,5 +8,5 @@ import java.util.List;
 public interface PatientService {
     PatientDTO createPatient(PatientDTO patientDTO);
     Patient getByIdPatient(Long id);
-    List<Patient> getAllPatient();
+    List<PatientDTO> findAllPatients();
 }

@@ -15,7 +15,7 @@ public class PatientMapper {
         }
 
         return new PatientDTO(
-                null,
+                patient.getId(),
                 patient.getName(),
                 patient.getCpf(),
                 patient.getSex(),

@@ -50,8 +50,8 @@ public class DoctorServiceImp implements DoctorService {
 
         // Associar as horas de funcionamento
         Doctor finalDoctor = doctor;
-        doctor.setOpeningHours(doctorDTO.openingHours().stream()
-                .map(openingHoursDTO -> new OpeningHours(
+        doctor.setDoctorDiaries(doctorDTO.openingHours().stream()
+                .map(openingHoursDTO -> new DoctorDiary(
                         openingHoursDTO.id(),
                         openingHoursDTO.dayOfWeek(),
                         openingHoursDTO.startTime(),
@@ -68,8 +68,10 @@ public class DoctorServiceImp implements DoctorService {
         return doctorMapper.toDTO(doctorRepository.save(doctor));
     }
     @Override
-    public List<Doctor> getAllDoctor() {
-        return doctorRepository.findAll();
+    public List<DoctorDTO> getAllDoctor() {
+        return doctorRepository.findAll().stream()
+                .map(doctor -> doctorMapper.toDTO(doctor))
+                .collect(Collectors.toList());
     }
 
     @Override
