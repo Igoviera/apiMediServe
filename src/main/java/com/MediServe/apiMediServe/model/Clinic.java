@@ -27,9 +27,9 @@ public class Clinic {
     private String email;
     @NotEmpty(message = "O telefone é obrigatório")
     private String phone;
-    @NotEmpty(message = "O horário de abertura é obrigatório")
+    @NotNull(message = "O horário de abertura é obrigatório")
     private LocalTime openingTime;
-    @NotEmpty(message = "O horário de fechamento é obrigatório")
+    @NotNull(message = "O horário de fechamento é obrigatório")
     private LocalTime closingTime;
     @Column(name = "img_url")
     private String imgURL;

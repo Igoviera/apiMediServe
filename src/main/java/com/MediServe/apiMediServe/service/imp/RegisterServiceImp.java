@@ -41,6 +41,7 @@ public class RegisterServiceImp implements RegisterService {
                 doctorRegistrationDTO.crm(),
                 doctorRegistrationDTO.cpf(),
                 doctorRegistrationDTO.phone(),
+                doctorRegistrationDTO.description(),
                 doctorRegistrationDTO.queryValue(),
                 doctorRegistrationDTO.address(),
                 doctorRegistrationDTO.specialties(),

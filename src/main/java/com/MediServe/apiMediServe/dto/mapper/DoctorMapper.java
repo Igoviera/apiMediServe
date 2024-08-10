@@ -33,6 +33,7 @@ public class DoctorMapper {
                 doctor.getCrm(),
                 doctor.getCpf(),
                 doctor.getPhone(),
+                doctor.getDescription(),
                 doctor.getQueryValue(),
                 addressMapper.toDTO(doctor.getAddress()),
                 doctor.getSpecialties().stream()
@@ -63,6 +64,7 @@ public class DoctorMapper {
         doctor.setCrm(doctorDTO.crm());
         doctor.setCpf(doctorDTO.cpf());
         doctor.setPhone(doctorDTO.phone());
+        doctor.setDescription(doctorDTO.description());
         doctor.setQueryValue(doctorDTO.queryValue());
         doctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
         doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())

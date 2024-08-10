@@ -2,6 +2,7 @@ package com.MediServe.apiMediServe.controller;
 
 import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +29,20 @@ public class ApplicationControllerAdvice {
                 .map(error -> error.getDefaultMessage())
                 .collect(Collectors.toList());
         return new ApiErros(errors);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErros handleDataIntegrityViolationException(DataIntegrityViolationException ex){
+        String message = "Erro de integridade de dados.";
+
+        if (ex.getMessage().contains("email")) {
+            message = "O e-mail já está em uso. Por favor, escolha outro e-mail.";
+        } else if (ex.getMessage().contains("name")) {
+            message = "O nome já está em uso. Por favor, escolha outro nome.";
+        }
+
+        return new ApiErros(message);
     }
 
     @ExceptionHandler(InvalidTimeFormatException.class)
