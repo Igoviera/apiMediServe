@@ -1,10 +1,10 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.DoctorDTO;
-import com.MediServe.apiMediServe.dto.OpeningHoursDTO;
+import com.MediServe.apiMediServe.dto.ScheduleDoctorDTO;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Doctor;
-import com.MediServe.apiMediServe.model.DoctorDiary;
+import com.MediServe.apiMediServe.model.ScheduleDoctor;
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import lombok.AllArgsConstructor;
@@ -40,7 +40,7 @@ public class DoctorMapper {
                         .map(Specialty::getId)
                         .collect(Collectors.toList()),
                 doctor.getDoctorDiaries().stream()
-                        .map(openingHours -> new OpeningHoursDTO(
+                        .map(openingHours -> new ScheduleDoctorDTO(
                                 openingHours.getId(),
                                 openingHours.getDayOfWeek(),
                                 openingHours.getStartTime(),
@@ -70,11 +70,11 @@ public class DoctorMapper {
         doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId())));
         doctor.setDoctorDiaries(doctorDTO.openingHours().stream()
-                .map(openingHoursDTO -> new DoctorDiary(
-                        openingHoursDTO.id(),
-                        openingHoursDTO.dayOfWeek(),
-                        openingHoursDTO.startTime(),
-                        openingHoursDTO.endTime(),
+                .map(scheduleDoctorDTO -> new ScheduleDoctor(
+                        scheduleDoctorDTO.id(),
+                        scheduleDoctorDTO.dayOfWeek(),
+                        scheduleDoctorDTO.startTime(),
+                        scheduleDoctorDTO.endTime(),
                         doctor))
                 .collect(Collectors.toList()));
         doctor.setStatus(doctorDTO.status());

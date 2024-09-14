@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.time.LocalTime;
 
-public record OpeningHoursDTO(
+public record ScheduleDoctorDTO(
         Long id,
         @NotEmpty(message = "O dia é obrigatório")
         DayOfTheWeek dayOfWeek,

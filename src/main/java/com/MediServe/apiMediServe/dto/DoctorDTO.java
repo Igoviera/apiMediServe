@@ -1,8 +1,5 @@
 package com.MediServe.apiMediServe.dto;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -17,7 +14,7 @@ public record DoctorDTO(
         BigDecimal queryValue,
         AddressDTO address,
         List<Long> specialtyIds,
-        List<OpeningHoursDTO> openingHours,
+        List<ScheduleDoctorDTO> scheduleDoctor,
         Long clinicId,
         Long userId,
         boolean status

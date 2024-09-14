@@ -3,7 +3,6 @@ package com.MediServe.apiMediServe.model;
 import com.MediServe.apiMediServe.enums.DayOfTheWeek;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,7 +16,7 @@ import java.time.LocalTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DoctorDiary {
+public class ScheduleDoctor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

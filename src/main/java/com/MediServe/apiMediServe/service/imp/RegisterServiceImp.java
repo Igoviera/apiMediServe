@@ -45,7 +45,7 @@ public class RegisterServiceImp implements RegisterService {
                 doctorRegistrationDTO.queryValue(),
                 doctorRegistrationDTO.address(),
                 doctorRegistrationDTO.specialties(),
-                doctorRegistrationDTO.openingHours(),
+                doctorRegistrationDTO.scheduleDoctor(),
                 doctorRegistrationDTO.clinicId(),
                 createdUser.id(),
                 true
