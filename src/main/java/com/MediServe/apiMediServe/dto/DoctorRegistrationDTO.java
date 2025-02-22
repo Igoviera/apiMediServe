@@ -14,6 +14,6 @@ public record DoctorRegistrationDTO(
         BigDecimal queryValue,
         AddressDTO address,
         List<Long> specialties,
-        List<OpeningHoursDTO> openingHours,
+        List<DoctorScheduleDTO> doctorSchedules,
         Long clinicId
 ) {}

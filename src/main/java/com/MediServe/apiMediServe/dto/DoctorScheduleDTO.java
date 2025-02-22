@@ -4,7 +4,7 @@ import com.MediServe.apiMediServe.enums.DayOfTheWeek;
 
 import java.time.LocalTime;
 
-public record OpeningHoursDTO(
+public record DoctorScheduleDTO(
         Long id,
         DayOfTheWeek dayOfWeek,
         LocalTime startTime,

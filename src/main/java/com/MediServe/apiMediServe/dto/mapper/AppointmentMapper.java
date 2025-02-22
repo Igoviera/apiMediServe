@@ -1,10 +1,7 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
-import com.MediServe.apiMediServe.dto.SchedulingDTO;
-import com.MediServe.apiMediServe.model.Clinic;
-import com.MediServe.apiMediServe.model.Doctor;
-import com.MediServe.apiMediServe.model.Patient;
-import com.MediServe.apiMediServe.model.Scheduling;
+import com.MediServe.apiMediServe.dto.AppointmentDTO;
+import com.MediServe.apiMediServe.model.Appointment;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import com.MediServe.apiMediServe.repository.DoctorRepository;
 import com.MediServe.apiMediServe.repository.PatientRepository;
@@ -13,35 +10,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class SchedulingMapper {
+public class AppointmentMapper {
     private final ClinicRepository clinicRepository;
     public final DoctorRepository doctorRepository;
     public final PatientRepository patientRepository;
 
-    public SchedulingDTO toDTO(Scheduling scheduling){
-        if (scheduling == null){
+    public AppointmentDTO toDTO(Appointment appointment){
+        if (appointment == null){
             return null;
         }
 
-        return new SchedulingDTO(
-                scheduling.getId(),
-                scheduling.getDay(),
-                scheduling.getConsultationTime(),
-                scheduling.getSchedulingStatus(),
-                scheduling.getPatient().getId(),
-                scheduling.getDoctor().getId(),
-                scheduling.getClinic().getId()
+        return new AppointmentDTO(
+                appointment.getId(),
+                appointment.getAppointmentDateTime(),
+                appointment.getSchedulingStatus(),
+                appointment.getPatient().getId(),
+                appointment.getDoctor().getId(),
+                appointment.getClinic().getId()
         );
     }
 
-    public Scheduling toEntity(SchedulingDTO schedulingDTO){
-        if (schedulingDTO == null){
+    public Appointment toEntity(AppointmentDTO appointmentDTO){
+        if (appointmentDTO == null){
             return null;
         }
 
-        Scheduling scheduling = new Scheduling();
-        scheduling.setDay(schedulingDTO.day());
-        scheduling.setConsultationTime(schedulingDTO.consultationTime());
+        Appointment appointment = new Appointment();
+        appointment.setAppointmentDateTime(appointmentDTO.appointmentDateTime());
 //        Patient patient = patientRepository.findById(schedulingDTO.patientId())
 //                .orElseThrow(() -> new RuntimeException("Paciente não encontrado com id " + schedulingDTO.patientId()));
 //
@@ -51,6 +46,6 @@ public class SchedulingMapper {
 //        Clinic clinic = clinicRepository.findById(schedulingDTO.clinicId())
 //                .orElseThrow(() -> new RuntimeException("Clínica não encontrada com id " + schedulingDTO.clinicId()));
 
-        return scheduling;
+        return appointment;
     }
 }

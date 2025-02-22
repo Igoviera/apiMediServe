@@ -50,12 +50,12 @@ public class DoctorServiceImp implements DoctorService {
 
         // Associar as horas de funcionamento
         Doctor finalDoctor = doctor;
-        doctor.setDoctorDiaries(doctorDTO.openingHours().stream()
-                .map(openingHoursDTO -> new DoctorDiary(
-                        openingHoursDTO.id(),
-                        openingHoursDTO.dayOfWeek(),
-                        openingHoursDTO.startTime(),
-                        openingHoursDTO.endTime(),
+        doctor.setDoctorSchedules(doctorDTO.doctorSchedules().stream()
+                .map(doctorScheduleDTO -> new DoctorSchedule(
+                        doctorScheduleDTO.id(),
+                        doctorScheduleDTO.dayOfWeek(),
+                        doctorScheduleDTO.startTime(),
+                        doctorScheduleDTO.endTime(),
                         finalDoctor))
                 .collect(Collectors.toList()));
 

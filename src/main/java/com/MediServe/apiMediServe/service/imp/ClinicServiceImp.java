@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.service.imp;
 
 import com.MediServe.apiMediServe.dto.ClinicDTO;
+import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.dto.mapper.ClinicMapper;
 import com.MediServe.apiMediServe.model.Clinic;
@@ -21,6 +22,9 @@ public class ClinicServiceImp implements ClinicService {
 
     @Override
     public ClinicDTO createClinic(ClinicDTO clinicDTO) {
+        if (clinicRepository.existsByEmail(clinicDTO.email())){
+           throw new EmailAlreadyExists();
+        }
         return clinicMapper.toDTO(clinicRepository.save(clinicMapper.toEntity(clinicDTO)));
     }
 

@@ -13,7 +13,7 @@ public record DoctorDTO(
         BigDecimal queryValue,
         AddressDTO address,
         List<Long> specialtyIds,
-        List<OpeningHoursDTO> openingHours,
+        List<DoctorScheduleDTO> doctorSchedules,
         Long clinicId,
         Long userId,
         boolean status

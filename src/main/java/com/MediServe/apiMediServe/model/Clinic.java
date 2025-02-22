@@ -2,7 +2,6 @@ package com.MediServe.apiMediServe.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +35,5 @@ public class Clinic {
     private List<Doctor> doctors;
 
     @OneToMany(mappedBy = "clinic")
-    private List<Scheduling> schedulings;
+    private List<Appointment> appointments;
 }
