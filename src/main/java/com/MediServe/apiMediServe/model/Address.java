@@ -17,7 +17,7 @@ import lombok.Setter;
 @Embeddable
 public class Address {
     @NotBlank(message = "O CEP é obrigatório")
-    @Pattern(regexp = "\\d{8}")
+    @Pattern(regexp = "\\d{5}-\\d{3}", message = "O CEP deve estar no formato 12345-678")
     private String cep;
     @NotBlank(message = "O nome da rua é obrigatório")
     private String logradouro;
@@ -28,5 +28,5 @@ public class Address {
     @NotBlank(message = "A cidade é obrigatório")
     private String city;
     @NotBlank(message = "O estado é obrigatório")
-    private String state;
+    private String uf;
 }

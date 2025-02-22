@@ -48,12 +48,6 @@ public class DoctorServiceImp implements DoctorService {
                 .collect(Collectors.toList());
         doctor.setSpecialties(specialties);
 
-        // Associar as horas de funcionamento
-        Doctor finalDoctor = doctor;
-
-                        finalDoctor))
-                .collect(Collectors.toList()));
-
         // Buscar e associar o usuário
         User user = userRespository.findById(doctorDTO.userId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.userId()));

@@ -19,7 +19,7 @@ public class AddressMapper {
                 address.getLocationNumber(),
                 address.getNeighborhood(),
                 address.getCity(),
-                address.getState()
+                address.getUf()
         );
     }
 
@@ -34,7 +34,7 @@ public class AddressMapper {
         address.setLocationNumber(addressDTO.locationNumber());
         address.setNeighborhood(addressDTO.neighborhood());
         address.setCity(addressDTO.city());
-        address.setState(addressDTO.state());
+        address.setUf(addressDTO.uf());
 
         return address;
     }

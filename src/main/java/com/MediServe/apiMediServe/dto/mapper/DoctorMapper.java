@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.DoctorDTO;
+import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import lombok.AllArgsConstructor;
@@ -13,9 +14,8 @@ import java.util.stream.Collectors;
 public class DoctorMapper {
 
     private final ClinicRepository clinicRepository;
-
     private final AddressMapper addressMapper;
-    private final ClinicMapper clinicMapper;
+    private final SpecialtyMapper specialtyMapper;
 
     public DoctorDTO toDTO(Doctor doctor) {
         if (doctor == null) {
@@ -34,12 +34,6 @@ public class DoctorMapper {
                 addressMapper.toDTO(doctor.getAddress()),
                 doctor.getSpecialties().stream()
                         .map(Specialty::getId)
-                        .collect(Collectors.toList()),
-                                openingHours.getId(),
-                                openingHours.getDayOfWeek(),
-                                openingHours.getStartTime(),
-                                openingHours.getEndTime(),
-                                doctor.getId()))
                         .collect(Collectors.toList()),
                 doctor.getClinic().getId(),
                 doctor.getUser() != null ? doctor.getUser().getId() : null,
@@ -61,10 +55,16 @@ public class DoctorMapper {
         doctor.setDescription(doctorDTO.description());
         doctor.setQueryValue(doctorDTO.queryValue());
         doctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
+
+        // Clinic association
         doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())
-                .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId())));
-                        doctor))
+                .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + doctorDTO.clinicId())));
+
+        // Specialty association (if you need to handle specialties as a list)
+        doctor.setSpecialties(doctorDTO.specialtyIds().stream()
+                .map(specialtyId -> specialtyMapper.toEntity(specialtyId))
                 .collect(Collectors.toList()));
+
         doctor.setStatus(doctorDTO.status());
 
         return doctor;

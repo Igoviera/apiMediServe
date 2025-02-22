@@ -1,18 +1,17 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
-import com.MediServe.apiMediServe.dto.DoctorDTO;
 import com.MediServe.apiMediServe.dto.SpecialtyDTO;
-import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.model.Specialty;
+import com.MediServe.apiMediServe.repository.SpecialtyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 @AllArgsConstructor
 public class SpecialtyMapper {
+
+    private final SpecialtyRepository specialtyRepository;
+
     public SpecialtyDTO toDTO(Specialty specialty){
         if (specialty == null){
             return null;
@@ -25,14 +24,12 @@ public class SpecialtyMapper {
         );
     }
 
-    public Specialty toEntity(SpecialtyDTO specialtyDTO){
-        if (specialtyDTO == null) {
+    public Specialty toEntity(Long specialtyId){
+        if (specialtyId == null) {
             return null;
         }
 
-        Specialty specialty = new Specialty();
-        specialty.setName(specialtyDTO.name());
-
-        return specialty;
+        return specialtyRepository.findById(specialtyId)
+                .orElseThrow(() -> new RuntimeException("Specialty not found with id: " + specialtyId));
     }
 }

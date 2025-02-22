@@ -43,7 +43,7 @@ public class AppointmentServiceImp implements AppointmentService {
                 .orElseThrow(() -> new RecordNotFoundException(appointmentDTO.clinicId()));
         appointment.setClinic(clinic);
 
-        appointment.setSchedulingStatus(SchedulingStatus.CONFIRMADO);
+        appointment.setSchedulingStatus(SchedulingStatus.MARCADA);
 
         return appointmentMapper.toDTO(appointmentRepository.save(appointment));
     }

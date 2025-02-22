@@ -1,20 +1,23 @@
 package com.MediServe.apiMediServe.dto;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 public record AddressDTO(
-        @NotEmpty(message = "O CEP é obrigatório")
+        @NotBlank(message = "O CEP é obrigatório")
+        @Pattern(regexp = "\\d{5}-\\d{3}", message = "O CEP deve estar no formato 12345-678")
         String cep,
-        @NotEmpty(message = "O nome da rua é obrigatório")
+        @NotBlank(message = "O nome da rua é obrigatório")
         String logradouro,
-        @NotEmpty(message = "O Numero é obrigatório")
+        @NotBlank(message = "O Numero é obrigatório")
         String locationNumber,
-        @NotEmpty(message = "O bairro é obrigatório")
+        @NotBlank(message = "O bairro é obrigatório")
         String neighborhood,
-        @NotEmpty(message = "A cidade é obrigatório")
+        @NotBlank(message = "A cidade é obrigatório")
         String city,
-        @NotEmpty(message = "O estado é obrigatório")
+        @NotBlank(message = "O estado é obrigatório")
         @Length(max = 2, message = "O estado não pode ter mais de 2 caracteres")
-        String state
+        String uf
 ) {}
