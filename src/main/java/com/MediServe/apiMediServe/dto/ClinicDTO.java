@@ -4,6 +4,7 @@ import com.MediServe.apiMediServe.model.Doctor;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.LocalTime;
 

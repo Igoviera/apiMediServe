@@ -45,7 +45,11 @@ public class RegisterServiceImp implements RegisterService {
                 doctorRegistrationDTO.queryValue(),
                 doctorRegistrationDTO.address(),
                 doctorRegistrationDTO.specialties(),
+<<<<<<< HEAD
                 doctorRegistrationDTO.scheduleDoctor(),
+=======
+                doctorRegistrationDTO.doctorSchedules(),
+>>>>>>> master
                 doctorRegistrationDTO.clinicId(),
                 createdUser.id(),
                 true

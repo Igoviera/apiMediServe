@@ -25,6 +25,10 @@ public record DoctorRegistrationDTO(
         @Valid
         AddressDTO address,
         List<Long> specialties,
+<<<<<<< HEAD
         List<ScheduleDoctorDTO> scheduleDoctor,
+=======
+        List<DoctorScheduleDTO> doctorSchedules,
+>>>>>>> master
         Long clinicId
 ) {}

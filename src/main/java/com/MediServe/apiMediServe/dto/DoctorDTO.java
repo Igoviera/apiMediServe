@@ -14,7 +14,11 @@ public record DoctorDTO(
         BigDecimal queryValue,
         AddressDTO address,
         List<Long> specialtyIds,
+<<<<<<< HEAD
         List<ScheduleDoctorDTO> scheduleDoctor,
+=======
+        List<DoctorScheduleDTO> doctorSchedules,
+>>>>>>> master
         Long clinicId,
         Long userId,
         boolean status

@@ -1,10 +1,17 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.DoctorDTO;
+<<<<<<< HEAD
 import com.MediServe.apiMediServe.dto.ScheduleDoctorDTO;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.model.ScheduleDoctor;
+=======
+import com.MediServe.apiMediServe.dto.DoctorScheduleDTO;
+import com.MediServe.apiMediServe.exception.RecordNotFoundException;
+import com.MediServe.apiMediServe.model.Doctor;
+import com.MediServe.apiMediServe.model.DoctorSchedule;
+>>>>>>> master
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import lombok.AllArgsConstructor;
@@ -39,8 +46,13 @@ public class DoctorMapper {
                 doctor.getSpecialties().stream()
                         .map(Specialty::getId)
                         .collect(Collectors.toList()),
+<<<<<<< HEAD
                 doctor.getDoctorDiaries().stream()
                         .map(openingHours -> new ScheduleDoctorDTO(
+=======
+                doctor.getDoctorSchedules().stream()
+                        .map(openingHours -> new DoctorScheduleDTO(
+>>>>>>> master
                                 openingHours.getId(),
                                 openingHours.getDayOfWeek(),
                                 openingHours.getStartTime(),
@@ -69,12 +81,21 @@ public class DoctorMapper {
         doctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
         doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId())));
+<<<<<<< HEAD
         doctor.setDoctorDiaries(doctorDTO.openingHours().stream()
                 .map(scheduleDoctorDTO -> new ScheduleDoctor(
                         scheduleDoctorDTO.id(),
                         scheduleDoctorDTO.dayOfWeek(),
                         scheduleDoctorDTO.startTime(),
                         scheduleDoctorDTO.endTime(),
+=======
+        doctor.setDoctorSchedules(doctorDTO.doctorSchedules().stream()
+                .map(doctorScheduleDTO -> new DoctorSchedule(
+                        doctorScheduleDTO.id(),
+                        doctorScheduleDTO.dayOfWeek(),
+                        doctorScheduleDTO.startTime(),
+                        doctorScheduleDTO.endTime(),
+>>>>>>> master
                         doctor))
                 .collect(Collectors.toList()));
         doctor.setStatus(doctorDTO.status());

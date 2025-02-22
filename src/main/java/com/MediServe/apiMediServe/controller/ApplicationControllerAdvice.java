@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.controller;
 
+import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
 import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,6 +32,7 @@ public class ApplicationControllerAdvice {
         return new ApiErros(errors);
     }
 
+<<<<<<< HEAD
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErros handleDataIntegrityViolationException(DataIntegrityViolationException ex){
@@ -43,6 +45,12 @@ public class ApplicationControllerAdvice {
         }
 
         return new ApiErros(message);
+=======
+    @ExceptionHandler(EmailAlreadyExists.class)
+    @ResponseStatus()
+    public ApiErros handleEmailAlreadyExists(EmailAlreadyExists ex){
+        return new ApiErros(ex.getMessage());
+>>>>>>> master
     }
 
     @ExceptionHandler(InvalidTimeFormatException.class)

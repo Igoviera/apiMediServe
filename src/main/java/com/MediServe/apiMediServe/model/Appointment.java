@@ -1,6 +1,5 @@
 package com.MediServe.apiMediServe.model;
 
-import com.MediServe.apiMediServe.enums.DayOfTheWeek;
 import com.MediServe.apiMediServe.enums.SchedulingStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -17,19 +16,10 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "scheduling")
-public class Scheduling {
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "day_of_week")
-    @Enumerated(EnumType.STRING)
-    private DayOfTheWeek day;
-
-    private LocalTime consultationTime;
-
-    @Enumerated(EnumType.STRING)
-    private SchedulingStatus schedulingStatus;
 
     @ManyToOne
     @JoinColumn(name = "patient_id")
@@ -42,4 +32,9 @@ public class Scheduling {
     @ManyToOne
     @JoinColumn(name = "clinic_id")
     private Clinic clinic;
+
+    private LocalDateTime appointmentDateTime;
+
+    @Enumerated(EnumType.STRING)
+    private SchedulingStatus schedulingStatus;
 }
