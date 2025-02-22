@@ -37,4 +37,5 @@ public class Appointment {
 
     @Enumerated(EnumType.STRING)
     private SchedulingStatus schedulingStatus;
+
 }

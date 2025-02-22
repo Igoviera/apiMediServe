@@ -1,7 +1,6 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.ScheduleDoctorDTO;
-import com.MediServe.apiMediServe.model.ScheduleDoctor;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
