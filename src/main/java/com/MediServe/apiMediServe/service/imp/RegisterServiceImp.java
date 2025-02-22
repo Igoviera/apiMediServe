@@ -45,14 +45,6 @@ public class RegisterServiceImp implements RegisterService {
                 doctorRegistrationDTO.queryValue(),
                 doctorRegistrationDTO.address(),
                 doctorRegistrationDTO.specialties(),
-                doctorRegistrationDTO.scheduleDoctor(),
-                doctorRegistrationDTO.clinicId(),
-                createdUser.id(),
-                true
-        );
-
-        return doctorService.createDoctor(doctorDTO);
-    }
 
     @Override
     @Transactional

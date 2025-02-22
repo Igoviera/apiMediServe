@@ -38,6 +38,6 @@ public class Patient {
     private Doctor doctor;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Scheduling> schedulings;
+    private List<Appointment> appointments;
 
 }

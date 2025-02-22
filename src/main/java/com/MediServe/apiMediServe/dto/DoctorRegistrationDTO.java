@@ -25,6 +25,5 @@ public record DoctorRegistrationDTO(
         @Valid
         AddressDTO address,
         List<Long> specialties,
-        List<ScheduleDoctorDTO> scheduleDoctor,
         Long clinicId
 ) {}

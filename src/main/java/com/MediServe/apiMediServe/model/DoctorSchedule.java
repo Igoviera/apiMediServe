@@ -1,7 +1,7 @@
 package com.MediServe.apiMediServe.model;
 
 import com.MediServe.apiMediServe.enums.DayOfTheWeek;
-import com.MediServe.apiMediServe.enums.SchedulingStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,36 +10,25 @@ import lombok.Setter;
 
 import java.time.LocalTime;
 
-
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "scheduling")
-public class Scheduling {
+public class DoctorSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Column(name = "day_of_week")
     @Enumerated(EnumType.STRING)
-    private DayOfTheWeek day;
-
-    private LocalTime consultationTime;
-
-    @Enumerated(EnumType.STRING)
-    private SchedulingStatus schedulingStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
+    private DayOfTheWeek dayOfWeek;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    //private int limitPatients;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Doctor doctor;
 
-    @ManyToOne
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
 }
+
