@@ -10,10 +10,10 @@ public record DoctorDTO(
         String crm,
         String cpf,
         String phone,
+        String description,
         BigDecimal queryValue,
         AddressDTO address,
         List<Long> specialtyIds,
-        List<DoctorScheduleDTO> doctorSchedules,
         Long clinicId,
         Long userId,
         boolean status

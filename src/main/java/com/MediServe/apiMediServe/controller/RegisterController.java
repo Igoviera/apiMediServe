@@ -5,6 +5,7 @@ import com.MediServe.apiMediServe.dto.DoctorRegistrationDTO;
 import com.MediServe.apiMediServe.dto.PatientDTO;
 import com.MediServe.apiMediServe.dto.PatientRegistrationDTO;
 import com.MediServe.apiMediServe.service.RegisterService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class RegisterController {
 
     @PostMapping("/doctor")
     @ResponseStatus(HttpStatus.CREATED)
-    public DoctorDTO registerDoctor(@RequestBody DoctorRegistrationDTO doctorRegistrationDTO){
+    public DoctorDTO registerDoctor(@Valid @RequestBody DoctorRegistrationDTO doctorRegistrationDTO){
         return registerService.registerDoctor(doctorRegistrationDTO);
     }
     @PostMapping("/patient")

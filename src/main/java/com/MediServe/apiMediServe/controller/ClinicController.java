@@ -18,7 +18,7 @@ public class ClinicController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public ClinicDTO createClinic(@RequestBody @Valid ClinicDTO clinicDTO){
+    public ClinicDTO createClinic(@Valid @RequestBody ClinicDTO clinicDTO){
         return clinicService.createClinic(clinicDTO);
     }
     @GetMapping

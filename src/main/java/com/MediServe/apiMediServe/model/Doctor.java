@@ -2,6 +2,8 @@ package com.MediServe.apiMediServe.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,13 +22,21 @@ public class Doctor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty(message = "O nome é obrigatório")
     private String name;
     private String imgUrl;
+    @NotEmpty(message = "O CRM é obrigatório")
     private String crm;
+    @NotEmpty(message = "O CPF é obrigatório")
     private String cpf;
+    @NotEmpty(message = "O telefone é obrigatório")
     private String phone;
+    private String description;
+//    @NotEmpty(message = "O valor é obrigatório")
+//    @Positive(message = "O valor tem que ser positivo")
     private BigDecimal queryValue;
     @Embedded
+    @Valid
     private Address address;
 
     @ManyToMany
@@ -38,7 +48,7 @@ public class Doctor {
     private List<Specialty> specialties;
 
     @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<DoctorSchedule> doctorSchedules = new ArrayList<>();
+
 
     private boolean status;
 

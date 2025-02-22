@@ -13,6 +13,7 @@ import java.time.format.DateTimeParseException;
 @Component
 @AllArgsConstructor
 public class ClinicMapper {
+    private AddressMapper addressMapper;
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     public ClinicDTO toDTO(Clinic clinic){
 
@@ -27,7 +28,8 @@ public class ClinicMapper {
                 clinic.getPhone(),
                 clinic.getOpeningTime() != null ? clinic.getOpeningTime().format(timeFormatter) : null,
                 clinic.getClosingTime() != null ? clinic.getClosingTime().format(timeFormatter) : null,
-                clinic.getImgURL()
+                clinic.getImgURL(),
+                addressMapper.toDTO(clinic.getAddress())
         );
     }
 
@@ -57,6 +59,7 @@ public class ClinicMapper {
                 throw new InvalidTimeFormatException();
             }
         }
+        clinic.setAddress(addressMapper.toEntity(clinicDTO.address()));
 
         return clinic;
     }

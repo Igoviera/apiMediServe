@@ -3,6 +3,7 @@ package com.MediServe.apiMediServe.controller;
 import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
 import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -29,12 +30,6 @@ public class ApplicationControllerAdvice {
                 .map(error -> error.getDefaultMessage())
                 .collect(Collectors.toList());
         return new ApiErros(errors);
-    }
-
-    @ExceptionHandler(EmailAlreadyExists.class)
-    @ResponseStatus()
-    public ApiErros handleEmailAlreadyExists(EmailAlreadyExists ex){
-        return new ApiErros(ex.getMessage());
     }
 
     @ExceptionHandler(InvalidTimeFormatException.class)

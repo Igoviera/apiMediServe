@@ -2,7 +2,9 @@ package com.MediServe.apiMediServe.controller;
 
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.service.SpecialtyService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,7 +16,8 @@ public class SpecialtyController {
     private final SpecialtyService specialtyService;
 
     @PostMapping
-    public Specialty createSpecialty(@RequestBody Specialty specialty){
+    @ResponseStatus(HttpStatus.CREATED)
+    public Specialty createSpecialty(@Valid @RequestBody Specialty specialty){
         return specialtyService.createSpecialty(specialty);
     }
     @GetMapping
