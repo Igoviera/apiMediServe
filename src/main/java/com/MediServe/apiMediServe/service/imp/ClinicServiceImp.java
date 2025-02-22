@@ -1,6 +1,6 @@
 package com.MediServe.apiMediServe.service.imp;
 
-import com.MediServe.apiMediServe.dto.ClinicDTO;
+import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
 import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.dto.mapper.ClinicMapper;

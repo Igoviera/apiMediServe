@@ -1,6 +1,6 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.dto.ClinicDTO;
+import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
 import com.MediServe.apiMediServe.service.ClinicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

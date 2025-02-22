@@ -1,6 +1,6 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
-import com.MediServe.apiMediServe.dto.ClinicDTO;
+import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
 import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
 import com.MediServe.apiMediServe.model.Clinic;
 import lombok.AllArgsConstructor;

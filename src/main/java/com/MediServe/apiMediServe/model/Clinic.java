@@ -21,16 +21,17 @@ public class Clinic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @NotBlank(message = "O nome é obrigatório")
-
     private String name;
-    @NotBlank(message = "O e-mail é obrigatório")
 
+    @NotBlank(message = "O e-mail é obrigatório")
     @Column(unique = true)
     private String email;
-    @NotBlank(message = "O telefone é obrigatório")
 
+    @NotBlank(message = "O telefone é obrigatório")
     private String phone;
+
     @NotNull(message = "O horário de abertura é obrigatório")
     private LocalTime openingTime;
 
