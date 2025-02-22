@@ -2,7 +2,9 @@ package com.MediServe.apiMediServe.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,16 +16,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Embeddable
 public class Address {
-    @NotEmpty(message = "O CEP é obrigatório")
+    @NotBlank(message = "O CEP é obrigatório")
+    @Pattern(regexp = "\\d{8}")
     private String cep;
-    @NotEmpty(message = "O nome da rua é obrigatório")
+    @NotBlank(message = "O nome da rua é obrigatório")
     private String logradouro;
-    @NotEmpty(message = "O Número é obrigatório")
+    @NotBlank(message = "O Número é obrigatório")
     private String locationNumber;
-    @NotEmpty(message = "O bairro é obrigatório")
+    @NotBlank(message = "O bairro é obrigatório")
     private String neighborhood;
-    @NotEmpty(message = "A cidade é obrigatório")
+    @NotBlank(message = "A cidade é obrigatório")
     private String city;
-    @NotEmpty(message = "O estado é obrigatório")
+    @NotBlank(message = "O estado é obrigatório")
     private String state;
 }
