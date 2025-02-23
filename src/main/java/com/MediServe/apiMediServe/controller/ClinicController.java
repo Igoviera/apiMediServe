@@ -23,7 +23,6 @@ public class ClinicController {
     }
     @GetMapping
     public List<ClinicDTO> findAllClinic(){
-        System.out.println();
         return clinicService.findAllClinic();
     }
     @GetMapping("/{id}")

@@ -20,17 +20,11 @@ public record ClinicDTO(
         @NotBlank(message = "O telefone é obrigatório")
         String phone,
 
-        @NotEmpty(message = "O horário de abertura é obrigatório")
-        @Pattern(
-                regexp = "^\\(\\d{2}\\) \\d{4,5}-\\d{4}$",
-                message = "O telefone deve estar no formato (XX) XXXXX-XXXX"
-        )
+        @NotBlank(message = "O horário de abertura é obrigatório")
+        String openingTime,
 
-        @NotNull(message = "O horário de abertura é obrigatório")
-        LocalTime openingTime,
-
-        @NotNull(message = "O horário de fechamento é obrigatório")
-        LocalTime closingTime,
+        @NotBlank(message = "O horário de fechamento é obrigatório")
+        String closingTime,
 
         String imgURL,
 

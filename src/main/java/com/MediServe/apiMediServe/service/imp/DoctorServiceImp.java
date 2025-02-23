@@ -1,7 +1,7 @@
 package com.MediServe.apiMediServe.service.imp;
 
 import com.MediServe.apiMediServe.dto.DoctorDTO;
-import com.MediServe.apiMediServe.dto.mapper.ClinicMapper;
+import com.MediServe.apiMediServe.dto.clinic.ClinicMapper;
 import com.MediServe.apiMediServe.dto.mapper.DoctorMapper;
 import com.MediServe.apiMediServe.dto.mapper.UserMapper;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
