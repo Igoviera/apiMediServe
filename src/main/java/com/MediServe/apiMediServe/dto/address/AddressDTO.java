@@ -1,4 +1,4 @@
-package com.MediServe.apiMediServe.dto;
+package com.MediServe.apiMediServe.dto.address;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;

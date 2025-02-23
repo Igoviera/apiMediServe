@@ -1,6 +1,6 @@
-package com.MediServe.apiMediServe.dto.mapper;
+package com.MediServe.apiMediServe.dto.address;
 
-import com.MediServe.apiMediServe.dto.AddressDTO;
+import com.MediServe.apiMediServe.dto.address.AddressDTO;
 import com.MediServe.apiMediServe.model.Address;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,10 +1,8 @@
 package com.MediServe.apiMediServe.dto.clinic;
 
-import com.MediServe.apiMediServe.dto.AddressDTO;
+import com.MediServe.apiMediServe.dto.address.AddressDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
-
-import java.time.LocalTime;
 
 
 public record ClinicDTO(

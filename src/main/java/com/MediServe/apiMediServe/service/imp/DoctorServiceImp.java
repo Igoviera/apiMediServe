@@ -1,9 +1,8 @@
 package com.MediServe.apiMediServe.service.imp;
 
 import com.MediServe.apiMediServe.dto.doctor.DoctorDTO;
-import com.MediServe.apiMediServe.dto.clinic.ClinicMapper;
 import com.MediServe.apiMediServe.dto.doctor.DoctorMapper;
-import com.MediServe.apiMediServe.dto.mapper.UserMapper;
+import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.*;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
@@ -26,10 +25,8 @@ public class DoctorServiceImp implements DoctorService {
     private final SpecialtyRepository specialtyRepository;
     private final ClinicRepository clinicRepository;
     private final UserRespository userRespository;
-
-    private final ClinicMapper clinicMapper;
     private final DoctorMapper doctorMapper;
-    private final UserMapper userMapper;
+    private final AddressMapper addressMapper;
 
     @Override
     @Transactional
@@ -57,6 +54,7 @@ public class DoctorServiceImp implements DoctorService {
         // Salvar o médico
         return doctorMapper.toDTO(doctorRepository.save(doctor));
     }
+
     @Override
     public List<DoctorDTO> getAllDoctor() {
         return doctorRepository.findAll().stream()
@@ -65,24 +63,25 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public Doctor getByIdDoctor(Long id) {
-        return doctorRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id));
+    public DoctorDTO getByIdDoctor(Long id) {
+        return doctorMapper.toDTO(doctorRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id)));
     }
 
     @Override
-    public Doctor updateDoctor(Long id, Doctor doctor) {
+    public DoctorDTO updateDoctor(Long id, DoctorDTO doctorDTO) {
         return doctorRepository.findById(id)
                 .map(existDoctor -> {
-                    existDoctor.setName(doctor.getName());
-                    existDoctor.setImgUrl(doctor.getImgUrl());
-                    existDoctor.setCrm(doctor.getCrm());
-                    existDoctor.setCpf(doctor.getCpf());
-                    existDoctor.setPhone(doctor.getPhone());
-                    existDoctor.setQueryValue(doctor.getQueryValue());
-                    existDoctor.setAddress(doctor.getAddress());
+                    existDoctor.setName(doctorDTO.name());
+                    existDoctor.setImgUrl(doctorDTO.imgUrl());
+                    existDoctor.setCrm(doctorDTO.crm());
+                    existDoctor.setCpf(doctorDTO.cpf());
+                    existDoctor.setPhone(doctorDTO.phone());
+                    existDoctor.setQueryValue(doctorDTO.queryValue());
+                    existDoctor.setDescription(doctorDTO.description());
+                    existDoctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
 
-                    return doctorRepository.save(existDoctor);
+                    return doctorMapper.toDTO(doctorRepository.save(existDoctor));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
 }

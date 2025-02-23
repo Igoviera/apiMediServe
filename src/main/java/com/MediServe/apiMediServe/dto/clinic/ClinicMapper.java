@@ -1,6 +1,6 @@
 package com.MediServe.apiMediServe.dto.clinic;
 
-import com.MediServe.apiMediServe.dto.mapper.AddressMapper;
+import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.model.Clinic;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;

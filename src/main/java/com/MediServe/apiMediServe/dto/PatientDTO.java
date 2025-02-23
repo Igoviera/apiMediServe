@@ -1,5 +1,7 @@
 package com.MediServe.apiMediServe.dto;
 
+import com.MediServe.apiMediServe.dto.address.AddressDTO;
+
 import java.time.LocalDate;
 
 public record PatientDTO(

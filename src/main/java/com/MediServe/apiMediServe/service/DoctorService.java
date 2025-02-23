@@ -8,6 +8,6 @@ import java.util.List;
 public interface DoctorService {
     DoctorDTO createDoctor(DoctorDTO doctorDTO);
     List<DoctorDTO> getAllDoctor();
-    Doctor getByIdDoctor(Long id);
-    Doctor updateDoctor(Long id, Doctor doctor);
+    DoctorDTO getByIdDoctor(Long id);
+    DoctorDTO updateDoctor(Long id, DoctorDTO doctorDTO);
 }

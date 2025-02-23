@@ -1,7 +1,6 @@
 package com.MediServe.apiMediServe.dto.doctor;
 
-import com.MediServe.apiMediServe.dto.doctor.DoctorDTO;
-import com.MediServe.apiMediServe.dto.mapper.AddressMapper;
+import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.dto.specialty.SpecialtyMapper;
 import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.model.Specialty;

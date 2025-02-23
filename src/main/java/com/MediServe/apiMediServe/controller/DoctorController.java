@@ -29,12 +29,12 @@ public class DoctorController {
     }
 
     @GetMapping("/{id}")
-    public Doctor getByIdDoctor(@PathVariable("id") Long id){
+    public DoctorDTO getByIdDoctor(@PathVariable("id") Long id){
         return doctorService.getByIdDoctor(id);
     }
 
     @PutMapping("/{id}")
-    public Doctor updateDoctor(@Valid @PathVariable("id") Long id, @RequestBody Doctor doctor){
-        return doctorService.updateDoctor(id, doctor);
+    public DoctorDTO updateDoctor(@Valid @PathVariable("id") Long id, @RequestBody DoctorDTO doctorDTO){
+        return doctorService.updateDoctor(id, doctorDTO);
     }
 }
