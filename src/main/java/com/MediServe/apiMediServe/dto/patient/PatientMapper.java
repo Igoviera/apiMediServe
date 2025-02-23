@@ -1,6 +1,6 @@
-package com.MediServe.apiMediServe.dto.mapper;
+package com.MediServe.apiMediServe.dto.patient;
 
-import com.MediServe.apiMediServe.dto.PatientDTO;
+import com.MediServe.apiMediServe.dto.patient.PatientDTO;
 import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.model.Patient;
 import lombok.AllArgsConstructor;
@@ -19,9 +19,7 @@ public class PatientMapper {
                 patient.getId(),
                 patient.getName(),
                 patient.getCpf(),
-                patient.getSex(),
                 patient.getPhone(),
-                patient.getBirthDate(),
                 addressMapper.toDTO(patient.getAddress()),
                 patient.getUser().getId()
         );
@@ -33,11 +31,9 @@ public class PatientMapper {
         }
 
         Patient patient = new Patient();
-        patient.setName(patientDTO.nome());
+        patient.setName(patientDTO.name());
         patient.setCpf(patientDTO.cpf());
-        patient.setSex(patientDTO.sex());
         patient.setPhone(patientDTO.phone());
-        patient.setBirthDate(patientDTO.birthDate());
         patient.setAddress(addressMapper.toEntity(patientDTO.address()));
 
         return patient;

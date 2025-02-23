@@ -1,13 +1,11 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.dto.PatientDTO;
-import com.MediServe.apiMediServe.model.Patient;
+import com.MediServe.apiMediServe.dto.patient.PatientDTO;
 import com.MediServe.apiMediServe.service.PatientService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.*;
 import java.util.List;
 
 @RestController
@@ -19,5 +17,15 @@ public class PatientController {
     @GetMapping
     public List<PatientDTO> findAllPatients(){
         return patientService.findAllPatients();
+    }
+
+    @PostMapping
+    public PatientDTO createPatient(@Valid PatientDTO patientDTO){
+        return patientService.createPatient(patientDTO);
+    }
+
+    @GetMapping("/{id}")
+    public PatientDTO findByPatientId(@PathVariable("id") Long id){
+        patientService.findByPatientId(id);
     }
 }
