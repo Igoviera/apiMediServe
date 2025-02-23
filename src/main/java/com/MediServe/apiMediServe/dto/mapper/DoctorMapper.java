@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.dto.mapper;
 
 import com.MediServe.apiMediServe.dto.DoctorDTO;
+import com.MediServe.apiMediServe.dto.specialty.SpecialtyMapper;
 import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
@@ -60,11 +61,7 @@ public class DoctorMapper {
         doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())
                 .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + doctorDTO.clinicId())));
 
-        // Specialty association (if you need to handle specialties as a list)
-        doctor.setSpecialties(doctorDTO.specialtyIds().stream()
-                .map(specialtyId -> specialtyMapper.toEntity(specialtyId))
-                .collect(Collectors.toList()));
-
+        doctor.setSpecialties(doctor.getSpecialties());
         doctor.setStatus(doctorDTO.status());
 
         return doctor;
