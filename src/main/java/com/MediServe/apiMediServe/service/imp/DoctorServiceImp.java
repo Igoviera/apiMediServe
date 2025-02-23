@@ -1,8 +1,8 @@
 package com.MediServe.apiMediServe.service.imp;
 
-import com.MediServe.apiMediServe.dto.DoctorDTO;
+import com.MediServe.apiMediServe.dto.doctor.DoctorDTO;
 import com.MediServe.apiMediServe.dto.clinic.ClinicMapper;
-import com.MediServe.apiMediServe.dto.mapper.DoctorMapper;
+import com.MediServe.apiMediServe.dto.doctor.DoctorMapper;
 import com.MediServe.apiMediServe.dto.mapper.UserMapper;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.*;
@@ -51,6 +51,7 @@ public class DoctorServiceImp implements DoctorService {
         // Buscar e associar o usuário
         User user = userRespository.findById(doctorDTO.userId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.userId()));
+
         doctor.setUser(user);
 
         // Salvar o médico
