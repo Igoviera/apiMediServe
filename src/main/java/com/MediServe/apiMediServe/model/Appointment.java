@@ -17,8 +17,9 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "appointment")
 public class Appointment {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

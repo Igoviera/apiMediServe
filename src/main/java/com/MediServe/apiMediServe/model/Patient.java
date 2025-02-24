@@ -28,7 +28,6 @@ public class Patient {
     private String name;
 
     @NotBlank(message = "O CPF é obrigatório")
-    @Pattern(regexp = "^[0-9]{3}\\.[0-9]{3}\\.[0-9]{3}-[0-9]{2}$", message = "CPF inválido")
     private String cpf;
 
     @NotBlank(message = "O telefone é obrigatório")
