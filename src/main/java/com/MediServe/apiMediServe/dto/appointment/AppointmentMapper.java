@@ -1,10 +1,7 @@
-package com.MediServe.apiMediServe.dto.mapper;
+package com.MediServe.apiMediServe.dto.appointment;
 
-import com.MediServe.apiMediServe.dto.AppointmentDTO;
+import com.MediServe.apiMediServe.dto.appointment.AppointmentDTO;
 import com.MediServe.apiMediServe.model.Appointment;
-import com.MediServe.apiMediServe.repository.ClinicRepository;
-import com.MediServe.apiMediServe.repository.DoctorRepository;
-import com.MediServe.apiMediServe.repository.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -19,22 +16,23 @@ public class AppointmentMapper {
 
         return new AppointmentDTO(
                 appointment.getId(),
+                appointment.getClinicId().getId(),
+                appointment.getDoctorId().getId(),
+                appointment.getPatientId().getId(),
                 appointment.getAppointmentDateTime(),
-                appointment.getSchedulingStatus(),
-                appointment.getPatient().getId(),
-                appointment.getDoctor().getId(),
-                appointment.getClinic().getId()
+                appointment.getStatusAppointment()
         );
     }
 
     public Appointment toEntity(AppointmentDTO appointmentDTO){
+
         if (appointmentDTO == null){
             return null;
         }
 
         Appointment appointment = new Appointment();
-        appointment.setAppointmentDateTime(appointmentDTO.appointmentDateTime());
-        appointment.setSchedulingStatus(appointment.getSchedulingStatus());
+        appointment.setAppointmentDateTime(appointment.getAppointmentDateTime());
+        appointment.setStatusAppointment(appointment.getStatusAppointment());
 
         return appointment;
     }

@@ -61,12 +61,12 @@ public class Doctor {
     @ManyToOne
     @JoinColumn(name = "clinic_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Clinic clinic;
+    private Clinic clinicId;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctorId", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
 }

@@ -36,7 +36,7 @@ public class DoctorMapper {
                 doctor.getSpecialties().stream()
                         .map(Specialty::getId)
                         .collect(Collectors.toList()),
-                doctor.getClinic().getId(),
+                doctor.getClinicId().getId(),
                 doctor.getUser() != null ? doctor.getUser().getId() : null,
                 doctor.isStatus()
         );
@@ -58,7 +58,7 @@ public class DoctorMapper {
         doctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
 
         // Clinic association
-        doctor.setClinic(clinicRepository.findById(doctorDTO.clinicId())
+        doctor.setClinicId(clinicRepository.findById(doctorDTO.clinicId())
                 .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + doctorDTO.clinicId())));
 
         doctor.setSpecialties(doctor.getSpecialties());

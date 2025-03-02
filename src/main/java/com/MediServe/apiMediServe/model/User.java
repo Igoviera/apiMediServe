@@ -26,7 +26,7 @@ public class User {
 
     @Column(nullable = false)
     @JsonIgnore
-    @NotBlank(message = "A senha é obrigatório")
+    @NotBlank(message = "A senha é obrigatória")
     private String password;
 
     @Enumerated(EnumType.STRING)

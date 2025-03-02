@@ -1,7 +1,7 @@
 package com.MediServe.apiMediServe.enums;
 
-public enum SchedulingStatus {
-    MARCADA,
+public enum StatusAppointment {
+    AGENDADA,
     CANCELADA,
-    REALIZADA
+    CONCLUIDA
 }

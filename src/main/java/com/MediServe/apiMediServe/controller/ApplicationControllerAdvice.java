@@ -37,4 +37,10 @@ public class ApplicationControllerAdvice {
     public ApiErros handleTimeFormatException(InvalidTimeFormatException ex){
         return  new ApiErros(ex.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErros handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ApiErros(ex.getMessage());
+    }
 }

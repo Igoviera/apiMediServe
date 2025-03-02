@@ -1,8 +1,7 @@
 package com.MediServe.apiMediServe.service;
 
-import com.MediServe.apiMediServe.dto.AppointmentDTO;
+import com.MediServe.apiMediServe.dto.appointment.AppointmentDTO;
 
 public interface AppointmentService {
-    AppointmentDTO createScheduling(AppointmentDTO appointmentDTO);
-    AppointmentDTO findByIdAppoitment(Long id);
+    AppointmentDTO createAppointment(AppointmentDTO appointmentDTO);
 }

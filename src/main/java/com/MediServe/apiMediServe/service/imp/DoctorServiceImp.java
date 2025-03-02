@@ -36,7 +36,7 @@ public class DoctorServiceImp implements DoctorService {
         // Validar e associar a clínica
         Clinic clinic = clinicRepository.findById(doctorDTO.clinicId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId()));
-        doctor.setClinic(clinic);
+        doctor.setClinicId(clinic);
 
         // Validar e associar as especialidades
         List<Specialty> specialties = doctorDTO.specialtyIds().stream()
