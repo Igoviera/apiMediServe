@@ -65,4 +65,12 @@ public class AppointmentServiceImp implements AppointmentService {
             throw new IllegalArgumentException("A consulta deve ser agendada entre 07:00 e 18:00, de segunda a sábado.");
         }
     }
+
+   public void validateExistsAppointment(AppointmentDTO appointmentDTO){
+       var existsAppointment = appointmentRepository.existsByDoctorIdAndAppointmentDateTime(appointmentDTO.doctorId(), appointmentDTO.data());
+
+       if (existsAppointment){
+           throw new IllegalArgumentException("O médico já tem uma consulta agendada para esse horário.");
+       }
+   }
 }
