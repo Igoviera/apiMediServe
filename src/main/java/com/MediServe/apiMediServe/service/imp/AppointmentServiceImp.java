@@ -67,7 +67,10 @@ public class AppointmentServiceImp implements AppointmentService {
     }
 
    public void validateExistsAppointment(AppointmentDTO appointmentDTO){
-       var existsAppointment = appointmentRepository.existsByDoctorIdAndAppointmentDateTime(appointmentDTO.doctorId(), appointmentDTO.data());
+        Doctor doctor = doctorRepository.findById(appointmentDTO.doctorId())
+                .orElseThrow(() -> new RecordNotFoundException("Médico não encontrado com o id: " + appointmentDTO.doctorId()));
+
+       var existsAppointment = appointmentRepository.existsByDoctorIdAndAppointmentDateTime(doctor, appointmentDTO.data());
 
        if (existsAppointment){
            throw new IllegalArgumentException("O médico já tem uma consulta agendada para esse horário.");

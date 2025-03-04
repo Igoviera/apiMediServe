@@ -3,6 +3,8 @@ package com.MediServe.apiMediServe.service.imp;
 import com.MediServe.apiMediServe.dto.doctor.DoctorDTO;
 import com.MediServe.apiMediServe.dto.doctor.DoctorMapper;
 import com.MediServe.apiMediServe.dto.address.AddressMapper;
+import com.MediServe.apiMediServe.dto.doctor.DoctorResponseDTO;
+import com.MediServe.apiMediServe.dto.doctor.DoctorResponseMapper;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.*;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
@@ -12,6 +14,8 @@ import com.MediServe.apiMediServe.repository.UserRespository;
 import com.MediServe.apiMediServe.service.DoctorService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +30,7 @@ public class DoctorServiceImp implements DoctorService {
     private final ClinicRepository clinicRepository;
     private final UserRespository userRespository;
     private final DoctorMapper doctorMapper;
+    private final DoctorResponseMapper doctorResponseMapper;
     private final AddressMapper addressMapper;
 
     @Override
@@ -56,15 +61,14 @@ public class DoctorServiceImp implements DoctorService {
     }
 
     @Override
-    public List<DoctorDTO> getAllDoctor() {
-        return doctorRepository.findAll().stream()
-                .map(doctor -> doctorMapper.toDTO(doctor))
-                .collect(Collectors.toList());
+    public Page<DoctorResponseDTO> getAllDoctor(Pageable pageable) {
+        return doctorRepository.findAll(pageable)
+                .map(doctor -> doctorResponseMapper.toDTO(doctor));
     }
 
     @Override
-    public DoctorDTO getByIdDoctor(Long id) {
-        return doctorMapper.toDTO(doctorRepository.findById(id)
+    public DoctorResponseDTO getByIdDoctor(Long id) {
+        return doctorResponseMapper.toDTO(doctorRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(id)));
     }
 

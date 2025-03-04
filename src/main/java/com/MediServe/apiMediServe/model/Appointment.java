@@ -41,7 +41,6 @@ public class Appointment {
     @FutureOrPresent(message = "A data da consulta deve estar no presente ou no futuro.")
     private LocalDateTime appointmentDateTime;
 
-
     @Enumerated(EnumType.STRING)
     @NotNull(message = "O status da consulta é obrigatório.")
     private StatusAppointment statusAppointment ;
