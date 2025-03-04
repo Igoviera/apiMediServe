@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.service.imp;
 
 import com.MediServe.apiMediServe.dto.appointment.AppointmentDTO;
+import com.MediServe.apiMediServe.dto.appointment.AppointmentDetailDTO;
 import com.MediServe.apiMediServe.dto.appointment.AppointmentMapper;
 import com.MediServe.apiMediServe.enums.StatusAppointment;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
@@ -18,6 +19,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -37,21 +40,35 @@ public class AppointmentServiceImp implements AppointmentService {
 
     @Override
     public AppointmentDTO createAppointment(AppointmentDTO appointmentDTO) {
-        clinicRepository.findById(appointmentDTO.clinicId())
+
+        Clinic clinic = clinicRepository.findById(appointmentDTO.clinicId())
                 .orElseThrow(() -> new RecordNotFoundException("Clinica não encontrada com o id: " + appointmentDTO.clinicId()));
 
-        doctorRepository.findById(appointmentDTO.doctorId())
+        Doctor doctor = doctorRepository.findById(appointmentDTO.doctorId())
                 .orElseThrow(() -> new RecordNotFoundException("Médico não encontrado com o id: " + appointmentDTO.doctorId()));
 
-        patientRepository.findById(appointmentDTO.pacientId())
-                .orElseThrow(() -> new RuntimeException("Paciente não encontrado com id: " + appointmentDTO.pacientId()));
+        Patient patient = patientRepository.findById(appointmentDTO.patientId())
+                .orElseThrow(() -> new RecordNotFoundException("Paciente não encontrado com id: " + appointmentDTO.patientId()));
 
         validateAppointmentTime(appointmentDTO);
 
         Appointment appointment = appointmentMapper.toEntity(appointmentDTO);
 
+        appointment.setClinicId(clinic);
+        appointment.setDoctorId(doctor);
+        appointment.setPatientId(patient);
+
         return appointmentMapper.toDTO(appointmentRepository.save(appointment));
 
+    }
+
+    @Override
+    public List<AppointmentDetailDTO> findAll() {
+        List<Appointment> appointments = appointmentRepository.findAll();
+
+        return appointments.stream()
+                .map(appointment -> appointmentMapper.toDetailDTO(appointment))
+                .collect(Collectors.toList());
     }
 
     public void validateAppointmentTime (AppointmentDTO appointmentDTO) {

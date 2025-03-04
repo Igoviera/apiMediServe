@@ -24,6 +24,19 @@ public class AppointmentMapper {
         );
     }
 
+    public AppointmentDetailDTO toDetailDTO(Appointment appointment){
+        if (appointment == null){
+            return null;
+        }
+
+        return new AppointmentDetailDTO(
+          appointment.getPatientId().getName(),
+          appointment.getDoctorId().getName(),
+          appointment.getAppointmentDateTime(),
+          appointment.getStatusAppointment()
+        );
+    }
+
     public Appointment toEntity(AppointmentDTO appointmentDTO){
 
         if (appointmentDTO == null){
@@ -31,8 +44,8 @@ public class AppointmentMapper {
         }
 
         Appointment appointment = new Appointment();
-        appointment.setAppointmentDateTime(appointment.getAppointmentDateTime());
-        appointment.setStatusAppointment(appointment.getStatusAppointment());
+        appointment.setAppointmentDateTime(appointmentDTO.data());
+        appointment.setStatusAppointment(appointmentDTO.status());
 
         return appointment;
     }

@@ -17,7 +17,7 @@ public record AppointmentDTO(
         Long doctorId,
 
         @NotNull(message = "O ID do paciente é obrigatório.")
-        Long pacientId,
+        Long patientId,
 
         @NotNull(message = "A data da consulta é obrigatória.")
         @FutureOrPresent(message = "A data da consulta deve estar no presente ou no futuro.")
