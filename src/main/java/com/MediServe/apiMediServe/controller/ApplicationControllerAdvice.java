@@ -43,4 +43,10 @@ public class ApplicationControllerAdvice {
     public ApiErros handleIllegalArgumentException(IllegalArgumentException ex) {
         return new ApiErros(ex.getMessage());
     }
+
+    @ExceptionHandler(EmailAlreadyExists.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErros handleEmailAlreadyExistsException(EmailAlreadyExists ex){
+        return new ApiErros(ex.getMessage());
+    }
 }

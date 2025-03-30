@@ -13,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/mediServe/patients")
 public class PatientController {
+
     private final PatientService patientService;
 
     @GetMapping
