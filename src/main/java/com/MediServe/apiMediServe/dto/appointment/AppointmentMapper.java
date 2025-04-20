@@ -30,6 +30,7 @@ public class AppointmentMapper {
         }
 
         return new AppointmentDetailDTO(
+                appointment.getId(),
           appointment.getPatientId().getName(),
           appointment.getDoctorId().getName(),
           appointment.getAppointmentDateTime(),

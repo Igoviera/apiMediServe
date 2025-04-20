@@ -11,6 +11,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -42,6 +43,6 @@ public class Patient {
     private User user;
 
     @OneToMany(mappedBy = "patientId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Appointment> appointments;
+    private List<Appointment> appointments = new ArrayList<>();
 
 }

@@ -1,12 +1,13 @@
 package com.MediServe.apiMediServe.dto.patient;
 
 import com.MediServe.apiMediServe.dto.address.AddressDTO;
+import com.MediServe.apiMediServe.dto.appointment.AppointmentDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDate;
+import java.util.List;
 
 public record PatientDTO(
 
@@ -25,6 +26,8 @@ public record PatientDTO(
 
         @Valid
         AddressDTO address,
+
+        List<AppointmentDTO> appointments,
 
         Long userId
 ) {}

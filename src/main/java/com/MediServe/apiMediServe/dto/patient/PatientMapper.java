@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.dto.patient;
 
+import com.MediServe.apiMediServe.dto.appointment.AppointmentMapper;
 import com.MediServe.apiMediServe.dto.patient.PatientDTO;
 import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.model.Patient;
@@ -9,7 +10,11 @@ import org.springframework.stereotype.Component;
 @Component
 @AllArgsConstructor
 public class PatientMapper {
+
     private final AddressMapper addressMapper;
+    private final AppointmentMapper appointmentMapper;
+
+
     public PatientDTO toDTO(Patient patient){
         if (patient == null){
             return null;
@@ -21,6 +26,7 @@ public class PatientMapper {
                 patient.getCpf(),
                 patient.getPhone(),
                 addressMapper.toDTO(patient.getAddress()),
+                patient.getAppointments().stream().map(appointment -> appointmentMapper.toDTO(appointment)).toList(),
                 patient.getUser().getId()
         );
     }
