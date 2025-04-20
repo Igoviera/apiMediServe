@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.dto.doctor;
 
 import com.MediServe.apiMediServe.dto.address.AddressDTO;
+import com.MediServe.apiMediServe.enums.DoctorStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 
@@ -38,10 +39,11 @@ public record DoctorDTO(
         @NotEmpty(message = "O médico deve ter pelo menos uma especialidade")
         List<Long> specialtyIds,
 
+        @NotNull(message = "O estado do médico é obrigatório ( ATIVO, INATIVO, DE_LICENÇA)")
+        DoctorStatus status,
+
         @NotNull(message = "O ID da clínica é obrigatório")
         Long clinicId,
 
-        Long userId,
-
-        boolean status
+        Long userId
 ) {}

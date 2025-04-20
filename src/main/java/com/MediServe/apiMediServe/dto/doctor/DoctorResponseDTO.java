@@ -1,5 +1,7 @@
 package com.MediServe.apiMediServe.dto.doctor;
 
+import com.MediServe.apiMediServe.enums.DoctorStatus;
+
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -12,5 +14,5 @@ public record DoctorResponseDTO(
         List<String> specialties,
         Long clinicId,
         Long userId,
-        Boolean status
+        DoctorStatus status
 ) {}

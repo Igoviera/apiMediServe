@@ -3,6 +3,7 @@ package com.MediServe.apiMediServe.controller;
 import com.MediServe.apiMediServe.dto.user.UserDTO;
 import com.MediServe.apiMediServe.model.User;
 import com.MediServe.apiMediServe.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping()
-    public UserDTO createUser(@RequestBody UserDTO userDTO){
+    public UserDTO createUser(@Valid @RequestBody UserDTO userDTO){
         return userService.createUser(userDTO);
     }
 

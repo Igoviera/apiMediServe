@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class SpecialtyServiceImp implements SpecialtyService {
 
     private final SpecialtyRepository specialtyRepository;
-    private  final SpecialtyMapper specialtyMapper;
+    private final SpecialtyMapper specialtyMapper;
 
     @Override
     public SpecialtyDTO createSpecialty(SpecialtyDTO specialtyDTO) {

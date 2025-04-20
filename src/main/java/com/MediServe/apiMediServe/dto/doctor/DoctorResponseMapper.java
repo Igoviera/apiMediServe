@@ -29,7 +29,7 @@ public class DoctorResponseMapper{
                 specialtyNames,
                 doctor.getClinicId().getId(),
                 doctor.getUser().getId(),
-                doctor.isStatus()
+                doctor.getStatus()
         );
     }
 }

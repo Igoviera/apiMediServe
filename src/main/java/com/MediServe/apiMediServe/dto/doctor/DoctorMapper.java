@@ -36,9 +36,10 @@ public class DoctorMapper {
                 doctor.getSpecialties().stream()
                         .map(Specialty::getId)
                         .collect(Collectors.toList()),
+                doctor.getStatus(),
                 doctor.getClinicId().getId(),
-                doctor.getUser() != null ? doctor.getUser().getId() : null,
-                doctor.isStatus()
+                doctor.getUser() != null ? doctor.getUser().getId() : null
+
         );
     }
 
