@@ -23,6 +23,7 @@ public class Clinic {
     private Long id;
 
     @NotBlank(message = "O nome é obrigatório")
+    @Column(unique = true)
     private String name;
 
     @NotBlank(message = "O e-mail é obrigatório")

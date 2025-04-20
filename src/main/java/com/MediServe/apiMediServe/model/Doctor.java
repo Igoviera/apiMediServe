@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.model;
 
+import com.MediServe.apiMediServe.enums.DoctorStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
@@ -56,7 +57,8 @@ public class Doctor {
     )
     private List<Specialty> specialties;
 
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    private DoctorStatus status;
 
     @ManyToOne
     @JoinColumn(name = "clinic_id")

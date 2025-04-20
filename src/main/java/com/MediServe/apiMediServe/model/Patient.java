@@ -29,6 +29,7 @@ public class Patient {
     private String name;
 
     @NotBlank(message = "O CPF é obrigatório")
+    @Column(unique = true)
     private String cpf;
 
     @NotBlank(message = "O telefone é obrigatório")
