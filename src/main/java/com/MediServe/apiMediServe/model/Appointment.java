@@ -23,6 +23,9 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @FutureOrPresent(message = "A data da consulta deve estar no presente ou no futuro.")
+    private LocalDateTime appointmentDateTime;
+
     @NotNull(message = "O ID do paciente é obrigatório.")
     @ManyToOne
     @JoinColumn(name = "patient_id")
@@ -37,9 +40,6 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "clinic_id")
     private Clinic clinicId;
-
-    @FutureOrPresent(message = "A data da consulta deve estar no presente ou no futuro.")
-    private LocalDateTime appointmentDateTime;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "O status da consulta é obrigatório.")

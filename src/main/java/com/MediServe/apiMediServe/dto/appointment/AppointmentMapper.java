@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class AppointmentMapper {
 
-    public AppointmentDTO toDTO(Appointment appointment){
-        if (appointment == null){
+    public AppointmentDTO toDTO(Appointment appointment) {
+        if (appointment == null) {
             return null;
         }
 
@@ -24,23 +24,23 @@ public class AppointmentMapper {
         );
     }
 
-    public AppointmentDetailDTO toDetailDTO(Appointment appointment){
-        if (appointment == null){
+    public AppointmentDetailDTO toDetailDTO(Appointment appointment) {
+        if (appointment == null) {
             return null;
         }
 
         return new AppointmentDetailDTO(
                 appointment.getId(),
-          appointment.getPatientId().getName(),
-          appointment.getDoctorId().getName(),
-          appointment.getAppointmentDateTime(),
-          appointment.getStatusAppointment()
+                appointment.getPatientId().getName(),
+                appointment.getDoctorId().getName(),
+                appointment.getAppointmentDateTime(),
+                appointment.getStatusAppointment()
         );
     }
 
-    public Appointment toEntity(AppointmentDTO appointmentDTO){
+    public Appointment toEntity(AppointmentDTO appointmentDTO) {
 
-        if (appointmentDTO == null){
+        if (appointmentDTO == null) {
             return null;
         }
 

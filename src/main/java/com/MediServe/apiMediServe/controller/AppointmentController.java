@@ -8,15 +8,19 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/mediServe/appointments")
 public class AppointmentController {
+
     private final AppointmentService appointmentService;
 
     @PostMapping
@@ -31,7 +35,7 @@ public class AppointmentController {
             @ApiResponse(responseCode = "400", description = "Dados inválidos para agendamento"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public AppointmentDTO createScheduling(@Valid @RequestBody AppointmentDTO appointmentDTO){
+    public AppointmentDTO createScheduling(@Valid @RequestBody AppointmentDTO appointmentDTO) {
         return appointmentService.createAppointment(appointmentDTO);
     }
 
@@ -45,7 +49,19 @@ public class AppointmentController {
             @ApiResponse(responseCode = "200", description = "Agendamentos retornados com sucesso"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public List<AppointmentDetailDTO> findAll(){
+    public List<AppointmentDetailDTO> findAll() {
         return appointmentService.findAll();
     }
+    @GetMapping("/{id}")
+    public AppointmentDTO findById(@PathVariable("id") Long id){
+        AppointmentDTO dto = appointmentService.findById(id);
+        return dto;
+    }
+
+
+//    @GetMapping("/available")
+//    public List<LocalTime> getAvailableSlots(@RequestParam Long doctorId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+//        return appointmentService.getAvailableSlots(doctorId, date);
+//
+//    }
 }

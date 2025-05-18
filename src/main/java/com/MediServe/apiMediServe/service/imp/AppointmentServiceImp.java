@@ -5,10 +5,7 @@ import com.MediServe.apiMediServe.dto.appointment.AppointmentDetailDTO;
 import com.MediServe.apiMediServe.dto.appointment.AppointmentMapper;
 import com.MediServe.apiMediServe.enums.StatusAppointment;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
-import com.MediServe.apiMediServe.model.Clinic;
-import com.MediServe.apiMediServe.model.Doctor;
-import com.MediServe.apiMediServe.model.Patient;
-import com.MediServe.apiMediServe.model.Appointment;
+import com.MediServe.apiMediServe.model.*;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
 import com.MediServe.apiMediServe.repository.DoctorRepository;
 import com.MediServe.apiMediServe.repository.PatientRepository;
@@ -19,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,6 +69,14 @@ public class AppointmentServiceImp implements AppointmentService {
         return appointments.stream()
                 .map(appointment -> appointmentMapper.toDetailDTO(appointment))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public AppointmentDTO findById(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Consulta não encontrada"));
+
+        return appointmentMapper.toDTO(appointment);
     }
 
     public void validateAppointmentTime (AppointmentDTO appointmentDTO) {
