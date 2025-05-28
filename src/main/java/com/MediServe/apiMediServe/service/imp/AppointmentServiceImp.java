@@ -50,7 +50,8 @@ public class AppointmentServiceImp implements AppointmentService {
         Patient patient = patientRepository.findById(appointmentDTO.patientId())
                 .orElseThrow(() -> new RecordNotFoundException("Paciente não encontrado com id: " + appointmentDTO.patientId()));
 
-        validateAppointmentTime(appointmentDTO);
+        validateAppointmentTime(appointmentDTO, clinic); // agora com horário da clínica
+        validateExistsAppointment(appointmentDTO);
 
         Appointment appointment = appointmentMapper.toEntity(appointmentDTO);
 
@@ -79,18 +80,21 @@ public class AppointmentServiceImp implements AppointmentService {
         return appointmentMapper.toDTO(appointment);
     }
 
-    public void validateAppointmentTime (AppointmentDTO appointmentDTO) {
+    public void validateAppointmentTime (AppointmentDTO appointmentDTO, Clinic clinic) {
         var dateAppointment = appointmentDTO.data();
+        var time = dateAppointment.toLocalTime();
 
         boolean isSunday = dateAppointment.getDayOfWeek().equals(DayOfWeek.SUNDAY);
-        boolean beforeOpening = dateAppointment.getHour() < 7;
-        boolean afterClosing  = dateAppointment.getHour() > 18;
+        boolean beforeOpening = time.isBefore(clinic.getOpeningTime());
+        boolean afterClosing  = time.isAfter(clinic.getClosingTime());
 
         if (isSunday || beforeOpening || afterClosing){
-            throw new IllegalArgumentException("A consulta deve ser agendada entre 07:00 e 18:00, de segunda a sábado.");
+            throw new IllegalArgumentException(
+                    String.format("A consulta deve ser agendada entre %s e %s, de segunda a sábado.",
+                            clinic.getOpeningTime(), clinic.getClosingTime())
+            );
         }
     }
-
    public void validateExistsAppointment(AppointmentDTO appointmentDTO){
         Doctor doctor = doctorRepository.findById(appointmentDTO.doctorId())
                 .orElseThrow(() -> new RecordNotFoundException("Médico não encontrado com o id: " + appointmentDTO.doctorId()));
