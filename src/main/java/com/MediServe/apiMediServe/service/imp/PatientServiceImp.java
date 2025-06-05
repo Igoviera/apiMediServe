@@ -1,7 +1,7 @@
 package com.MediServe.apiMediServe.service.imp;
 
-import com.MediServe.apiMediServe.dto.PatientDTO;
-import com.MediServe.apiMediServe.dto.mapper.PatientMapper;
+import com.MediServe.apiMediServe.dto.patient.PatientDTO;
+import com.MediServe.apiMediServe.dto.patient.PatientMapper;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Patient;
 import com.MediServe.apiMediServe.model.User;
@@ -17,9 +17,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class PatientServiceImp implements PatientService {
+
     private final PatientRepository patientRepository;
     private final UserRespository userRespository;
-
     private final PatientMapper patientMapper;
 
     @Override
@@ -28,14 +28,15 @@ public class PatientServiceImp implements PatientService {
 
         User user = userRespository.findById(patientDTO.userId())
                 .orElseThrow(() -> new RecordNotFoundException(patientDTO.userId()));
+
         patient.setUser(user);
 
         return patientMapper.toDTO(patientRepository.save(patient));
     }
 
     @Override
-    public Patient getByIdPatient(Long id) {
-        return null;
+    public PatientDTO findByPatientId(Long id) {
+        return patientMapper.toDTO(patientRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id)));
     }
 
     @Override

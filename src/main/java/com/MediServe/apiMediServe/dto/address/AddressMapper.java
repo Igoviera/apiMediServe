@@ -1,6 +1,6 @@
-package com.MediServe.apiMediServe.dto.mapper;
+package com.MediServe.apiMediServe.dto.address;
 
-import com.MediServe.apiMediServe.dto.AddressDTO;
+import com.MediServe.apiMediServe.dto.address.AddressDTO;
 import com.MediServe.apiMediServe.model.Address;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,7 +19,7 @@ public class AddressMapper {
                 address.getLocationNumber(),
                 address.getNeighborhood(),
                 address.getCity(),
-                address.getState()
+                address.getUf()
         );
     }
 
@@ -34,7 +34,7 @@ public class AddressMapper {
         address.setLocationNumber(addressDTO.locationNumber());
         address.setNeighborhood(addressDTO.neighborhood());
         address.setCity(addressDTO.city());
-        address.setState(addressDTO.state());
+        address.setUf(addressDTO.uf());
 
         return address;
     }

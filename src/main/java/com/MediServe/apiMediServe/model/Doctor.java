@@ -1,16 +1,16 @@
 package com.MediServe.apiMediServe.model;
 
+import com.MediServe.apiMediServe.enums.DoctorStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,25 +20,34 @@ import java.util.List;
 @NoArgsConstructor
 public class Doctor {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "O nome é obrigatório")
+
+    @NotBlank(message = "O nome é obrigatório")
     private String name;
+
     private String imgUrl;
-    @NotEmpty(message = "O CRM é obrigatório")
+
+    @NotBlank(message = "O CRM é obrigatório")
     private String crm;
-    @NotEmpty(message = "O CPF é obrigatório")
+
+    @NotBlank(message = "O CPF é obrigatório")
     private String cpf;
-    @NotEmpty(message = "O telefone é obrigatório")
+
+    @NotBlank(message = "O telefone é obrigatório")
     private String phone;
+
     private String description;
-//    @NotEmpty(message = "O valor é obrigatório")
-//    @Positive(message = "O valor tem que ser positivo")
+
+    @NotNull(message = "O valor é obrigatório")
+    @Positive(message = "O valor tem que ser positivo")
     private BigDecimal queryValue;
+
     @Embedded
     @Valid
     private Address address;
 
+    @NotEmpty(message = "O médico deve ter pelo menos uma especialidade")
     @ManyToMany
     @JoinTable(
             name = "doctor_specialty",
@@ -47,27 +56,18 @@ public class Doctor {
     )
     private List<Specialty> specialties;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-<<<<<<< HEAD
-    private List<ScheduleDoctor> doctorDiaries = new ArrayList<>();
-=======
-    private List<DoctorSchedule> doctorSchedules = new ArrayList<>();
->>>>>>> master
-
-    private boolean status;
+    @Enumerated(EnumType.STRING)
+    private DoctorStatus status;
 
     @ManyToOne
     @JoinColumn(name = "clinic_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Clinic clinic;
+    private Clinic clinicId;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Patient> patients = new ArrayList<>();
-
-    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctorId", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
 }

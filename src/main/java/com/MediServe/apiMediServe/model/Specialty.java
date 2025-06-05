@@ -17,13 +17,14 @@ import java.util.List;
 @NoArgsConstructor
 public class Specialty {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotEmpty(message = "O nome é obrigatório")
-    @Column(unique = true)
+    @Column(unique = true,length = 100)
     private String name;
 
     @ManyToMany(mappedBy = "specialties")
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty
     private List<Doctor> doctors;
 }

@@ -1,8 +1,9 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.dto.UserDTO;
+import com.MediServe.apiMediServe.dto.user.UserDTO;
 import com.MediServe.apiMediServe.model.User;
 import com.MediServe.apiMediServe.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +15,18 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @PostMapping("/register")
-    public UserDTO createUser(@RequestBody UserDTO userDTO){
+    @PostMapping()
+    public UserDTO createUser(@Valid @RequestBody UserDTO userDTO){
         return userService.createUser(userDTO);
     }
+
     @GetMapping
-    public List<User> getAllUser(){
+    public List<UserDTO> getAllUser(){
         return userService.getAllUser();
+    }
+
+    @GetMapping("/{id}")
+    public UserDTO getUserById(@PathVariable("id") Long id){
+        return userService.getByIdUser(id);
     }
 }

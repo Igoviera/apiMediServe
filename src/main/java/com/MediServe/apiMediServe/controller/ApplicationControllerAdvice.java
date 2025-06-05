@@ -31,31 +31,21 @@ public class ApplicationControllerAdvice {
                 .collect(Collectors.toList());
         return new ApiErros(errors);
     }
-
-<<<<<<< HEAD
-    @ExceptionHandler(DataIntegrityViolationException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErros handleDataIntegrityViolationException(DataIntegrityViolationException ex){
-        String message = "Erro de integridade de dados.";
-
-        if (ex.getMessage().contains("email")) {
-            message = "O e-mail já está em uso. Por favor, escolha outro e-mail.";
-        } else if (ex.getMessage().contains("name")) {
-            message = "O nome já está em uso. Por favor, escolha outro nome.";
-        }
-
-        return new ApiErros(message);
-=======
-    @ExceptionHandler(EmailAlreadyExists.class)
-    @ResponseStatus()
-    public ApiErros handleEmailAlreadyExists(EmailAlreadyExists ex){
-        return new ApiErros(ex.getMessage());
->>>>>>> master
-    }
-
     @ExceptionHandler(InvalidTimeFormatException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErros handleTimeFormatException(InvalidTimeFormatException ex){
         return  new ApiErros(ex.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErros handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ApiErros(ex.getMessage());
+    }
+
+    @ExceptionHandler(EmailAlreadyExists.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErros handleEmailAlreadyExistsException(EmailAlreadyExists ex){
+        return new ApiErros(ex.getMessage());
     }
 }

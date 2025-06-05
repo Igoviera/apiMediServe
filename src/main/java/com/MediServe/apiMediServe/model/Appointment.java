@@ -1,7 +1,9 @@
 package com.MediServe.apiMediServe.model;
 
-import com.MediServe.apiMediServe.enums.SchedulingStatus;
+import com.MediServe.apiMediServe.enums.StatusAppointment;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,26 +17,32 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "scheduling")
 public class Appointment {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "patient_id")
-    private Patient patient;
-
-    @ManyToOne
-    @JoinColumn(name = "doctor_id")
-    private Doctor doctor;
-
-    @ManyToOne
-    @JoinColumn(name = "clinic_id")
-    private Clinic clinic;
-
+    @FutureOrPresent(message = "A data da consulta deve estar no presente ou no futuro.")
     private LocalDateTime appointmentDateTime;
 
+    @NotNull(message = "O ID do paciente é obrigatório.")
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patientId;
+
+    @NotNull(message = "O ID do médico é obrigatório.")
+    @ManyToOne
+    @JoinColumn(name = "doctor_id")
+    private Doctor doctorId;
+
+    @NotNull(message = "O ID da clinica é obrigatório.")
+    @ManyToOne
+    @JoinColumn(name = "clinic_id")
+    private Clinic clinicId;
+
     @Enumerated(EnumType.STRING)
-    private SchedulingStatus schedulingStatus;
+    @NotNull(message = "O status da consulta é obrigatório.")
+    private StatusAppointment statusAppointment ;
+
 }

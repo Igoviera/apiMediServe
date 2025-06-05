@@ -1,9 +1,10 @@
 package com.MediServe.apiMediServe.service.imp;
 
-import com.MediServe.apiMediServe.dto.DoctorDTO;
-import com.MediServe.apiMediServe.dto.mapper.ClinicMapper;
-import com.MediServe.apiMediServe.dto.mapper.DoctorMapper;
-import com.MediServe.apiMediServe.dto.mapper.UserMapper;
+import com.MediServe.apiMediServe.dto.doctor.DoctorDTO;
+import com.MediServe.apiMediServe.dto.doctor.DoctorMapper;
+import com.MediServe.apiMediServe.dto.address.AddressMapper;
+import com.MediServe.apiMediServe.dto.doctor.DoctorResponseDTO;
+import com.MediServe.apiMediServe.dto.doctor.DoctorResponseMapper;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.*;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
@@ -13,6 +14,8 @@ import com.MediServe.apiMediServe.repository.UserRespository;
 import com.MediServe.apiMediServe.service.DoctorService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,10 +29,9 @@ public class DoctorServiceImp implements DoctorService {
     private final SpecialtyRepository specialtyRepository;
     private final ClinicRepository clinicRepository;
     private final UserRespository userRespository;
-
-    private final ClinicMapper clinicMapper;
     private final DoctorMapper doctorMapper;
-    private final UserMapper userMapper;
+    private final DoctorResponseMapper doctorResponseMapper;
+    private final AddressMapper addressMapper;
 
     @Override
     @Transactional
@@ -39,7 +41,7 @@ public class DoctorServiceImp implements DoctorService {
         // Validar e associar a clínica
         Clinic clinic = clinicRepository.findById(doctorDTO.clinicId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.clinicId()));
-        doctor.setClinic(clinic);
+        doctor.setClinicId(clinic);
 
         // Validar e associar as especialidades
         List<Specialty> specialties = doctorDTO.specialtyIds().stream()
@@ -47,61 +49,42 @@ public class DoctorServiceImp implements DoctorService {
                         .orElseThrow(() -> new RecordNotFoundException(specialtyId)))
                 .collect(Collectors.toList());
         doctor.setSpecialties(specialties);
-
-        // Associar as horas de funcionamento
-        Doctor finalDoctor = doctor;
-<<<<<<< HEAD
-        doctor.setDoctorDiaries(doctorDTO.openingHours().stream()
-                .map(openingHoursDTO -> new ScheduleDoctor(
-                        openingHoursDTO.id(),
-                        openingHoursDTO.dayOfWeek(),
-                        openingHoursDTO.startTime(),
-                        openingHoursDTO.endTime(),
-=======
-        doctor.setDoctorSchedules(doctorDTO.doctorSchedules().stream()
-                .map(doctorScheduleDTO -> new DoctorSchedule(
-                        doctorScheduleDTO.id(),
-                        doctorScheduleDTO.dayOfWeek(),
-                        doctorScheduleDTO.startTime(),
-                        doctorScheduleDTO.endTime(),
->>>>>>> master
-                        finalDoctor))
-                .collect(Collectors.toList()));
-
         // Buscar e associar o usuário
         User user = userRespository.findById(doctorDTO.userId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.userId()));
+
         doctor.setUser(user);
 
         // Salvar o médico
         return doctorMapper.toDTO(doctorRepository.save(doctor));
     }
+
     @Override
-    public List<DoctorDTO> getAllDoctor() {
-        return doctorRepository.findAll().stream()
-                .map(doctor -> doctorMapper.toDTO(doctor))
-                .collect(Collectors.toList());
+    public Page<DoctorResponseDTO> getAllDoctor(Pageable pageable) {
+        return doctorRepository.findAll(pageable)
+                .map(doctor -> doctorResponseMapper.toDTO(doctor));
     }
 
     @Override
-    public Doctor getByIdDoctor(Long id) {
-        return doctorRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException(id));
+    public DoctorResponseDTO getByIdDoctor(Long id) {
+        return doctorResponseMapper.toDTO(doctorRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException(id)));
     }
 
     @Override
-    public Doctor updateDoctor(Long id, Doctor doctor) {
+    public DoctorDTO updateDoctor(Long id, DoctorDTO doctorDTO) {
         return doctorRepository.findById(id)
                 .map(existDoctor -> {
-                    existDoctor.setName(doctor.getName());
-                    existDoctor.setImgUrl(doctor.getImgUrl());
-                    existDoctor.setCrm(doctor.getCrm());
-                    existDoctor.setCpf(doctor.getCpf());
-                    existDoctor.setPhone(doctor.getPhone());
-                    existDoctor.setQueryValue(doctor.getQueryValue());
-                    existDoctor.setAddress(doctor.getAddress());
+                    existDoctor.setName(doctorDTO.name());
+                    existDoctor.setImgUrl(doctorDTO.imgUrl());
+                    existDoctor.setCrm(doctorDTO.crm());
+                    existDoctor.setCpf(doctorDTO.cpf());
+                    existDoctor.setPhone(doctorDTO.phone());
+                    existDoctor.setQueryValue(doctorDTO.queryValue());
+                    existDoctor.setDescription(doctorDTO.description());
+                    existDoctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
 
-                    return doctorRepository.save(existDoctor);
+                    return doctorMapper.toDTO(doctorRepository.save(existDoctor));
                 }).orElseThrow(() -> new RecordNotFoundException(id));
     }
 }

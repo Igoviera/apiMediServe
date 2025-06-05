@@ -1,12 +1,12 @@
 package com.MediServe.apiMediServe.service;
 
-import com.MediServe.apiMediServe.model.Specialty;
+import com.MediServe.apiMediServe.dto.specialty.SpecialtyDTO;
 
 import java.util.List;
 
 public interface SpecialtyService {
-    Specialty createSpecialty(Specialty specialty);
-    List<Specialty> getAllSpecialty();
-    Specialty getByIdSpecialty(Long id);
-    Specialty updateSpecialty(Long id, Specialty specialty);
+    SpecialtyDTO createSpecialty(SpecialtyDTO specialtyDTO);
+    List<SpecialtyDTO> getAllSpecialty();
+    SpecialtyDTO getByIdSpecialty(Long id);
+    SpecialtyDTO updateSpecialty(Long id, SpecialtyDTO specialtyDTO);
 }
