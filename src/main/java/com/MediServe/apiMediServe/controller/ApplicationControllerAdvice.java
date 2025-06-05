@@ -31,7 +31,10 @@ public class ApplicationControllerAdvice {
                 .collect(Collectors.toList());
         return new ApiErros(errors);
     }
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
     @ExceptionHandler(InvalidTimeFormatException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErros handleTimeFormatException(InvalidTimeFormatException ex){

@@ -49,7 +49,10 @@ public class DoctorServiceImp implements DoctorService {
                         .orElseThrow(() -> new RecordNotFoundException(specialtyId)))
                 .collect(Collectors.toList());
         doctor.setSpecialties(specialties);
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
         // Buscar e associar o usuário
         User user = userRespository.findById(doctorDTO.userId())
                 .orElseThrow(() -> new RecordNotFoundException(doctorDTO.userId()));
