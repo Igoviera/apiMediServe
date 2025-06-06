@@ -83,6 +83,7 @@ public class DoctorServiceImp implements DoctorService {
                     existDoctor.setPhone(doctorDTO.phone());
                     existDoctor.setQueryValue(doctorDTO.queryValue());
                     existDoctor.setDescription(doctorDTO.description());
+                    existDoctor.setStatus(doctorDTO.status());
                     existDoctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
 
                     return doctorMapper.toDTO(doctorRepository.save(existDoctor));
