@@ -1,12 +1,12 @@
 package com.MediServe.apiMediServe.service;
 
-import com.MediServe.apiMediServe.dto.patient.PatientDTO;
-import com.MediServe.apiMediServe.model.Patient;
+import com.MediServe.apiMediServe.dto.patient.PatientRequestDTO;
+import com.MediServe.apiMediServe.dto.patient.PatientResponseDTO;
 
 import java.util.List;
 
 public interface PatientService {
-    PatientDTO createPatient(PatientDTO patientDTO);
-    List<PatientDTO> findAllPatients();
-    PatientDTO findByPatientId(Long id);
+    PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO);
+    List<PatientResponseDTO> findAllPatients();
+    PatientResponseDTO findByPatientId(Long id);
 }

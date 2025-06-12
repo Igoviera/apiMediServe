@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.dto.patient.PatientDTO;
+import com.MediServe.apiMediServe.dto.patient.PatientRequestDTO;
+import com.MediServe.apiMediServe.dto.patient.PatientResponseDTO;
 import com.MediServe.apiMediServe.service.PatientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -29,7 +30,7 @@ public class PatientController {
             @ApiResponse(responseCode = "200", description = "Pacientes retornados com sucesso"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public List<PatientDTO> findAllPatients(){
+    public List<PatientResponseDTO> findAllPatients(){
         return patientService.findAllPatients();
     }
 
@@ -45,8 +46,8 @@ public class PatientController {
             @ApiResponse(responseCode = "400", description = "Dados inválidos"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public PatientDTO createPatient(@Valid @RequestBody PatientDTO patientDTO){
-        return patientService.createPatient(patientDTO);
+    public PatientResponseDTO createPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO){
+        return patientService.createPatient(patientRequestDTO);
     }
 
     @GetMapping("/{id}")
@@ -60,7 +61,7 @@ public class PatientController {
             @ApiResponse(responseCode = "404", description = "Paciente não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public PatientDTO findByPatientId(@PathVariable("id") Long id){
+    public PatientResponseDTO findByPatientId(@PathVariable("id") Long id){
        return patientService.findByPatientId(id);
     }
 }

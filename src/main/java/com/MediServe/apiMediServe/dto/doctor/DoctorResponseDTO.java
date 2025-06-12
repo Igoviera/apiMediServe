@@ -1,5 +1,7 @@
 package com.MediServe.apiMediServe.dto.doctor;
 
+import com.MediServe.apiMediServe.dto.address.AddressDTO;
+import com.MediServe.apiMediServe.dto.user.UserResponseDTO;
 import com.MediServe.apiMediServe.enums.DoctorStatus;
 
 import java.math.BigDecimal;
@@ -10,9 +12,13 @@ public record DoctorResponseDTO(
         String name,
         String imgUrl,
         String crm,
+        String cpf,
+        String phone,
+        String description,
         BigDecimal queryValue,
-        List<String> specialties,
+        AddressDTO address,
+        List<Long> specialties,
+        DoctorStatus status,
         Long clinicId,
-        Long userId,
-        DoctorStatus status
+        UserResponseDTO user
 ) {}

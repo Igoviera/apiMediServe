@@ -1,7 +1,7 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.dto.user.UserDTO;
-import com.MediServe.apiMediServe.model.User;
+import com.MediServe.apiMediServe.dto.user.UserRequestDTO;
+import com.MediServe.apiMediServe.dto.user.UserResponseDTO;
 import com.MediServe.apiMediServe.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -16,17 +16,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping()
-    public UserDTO createUser(@Valid @RequestBody UserDTO userDTO){
-        return userService.createUser(userDTO);
+    public UserResponseDTO createUser(@Valid @RequestBody UserRequestDTO userRequestDTO){
+        return userService.createUser(userRequestDTO);
     }
 
     @GetMapping
-    public List<UserDTO> getAllUser(){
+    public List<UserResponseDTO> getAllUser(){
         return userService.getAllUser();
     }
 
     @GetMapping("/{id}")
-    public UserDTO getUserById(@PathVariable("id") Long id){
+    public UserResponseDTO getUserById(@PathVariable("id") Long id){
         return userService.getByIdUser(id);
     }
 }

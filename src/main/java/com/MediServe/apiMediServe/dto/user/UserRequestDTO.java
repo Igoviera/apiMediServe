@@ -1,17 +1,12 @@
 package com.MediServe.apiMediServe.dto.user;
 
 import com.MediServe.apiMediServe.enums.UserRole;
-import com.MediServe.apiMediServe.model.Doctor;
-import com.MediServe.apiMediServe.model.Patient;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record UserDTO(
-        Long id,
-
+public record UserRequestDTO(
         @NotBlank(message = "O nome de usuário é obrigatório")
         String username,
 

@@ -2,6 +2,7 @@ package com.MediServe.apiMediServe.dto.doctor;
 
 import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.dto.specialty.SpecialtyMapper;
+import com.MediServe.apiMediServe.dto.user.UserMapper;
 import com.MediServe.apiMediServe.model.Doctor;
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
@@ -17,13 +18,14 @@ public class DoctorMapper {
     private final ClinicRepository clinicRepository;
     private final AddressMapper addressMapper;
     private final SpecialtyMapper specialtyMapper;
+    private final UserMapper userMapper;
 
-    public DoctorDTO toDTO(Doctor doctor) {
+    public DoctorResponseDTO toDTO(Doctor doctor) {
         if (doctor == null) {
             return null;
         }
 
-        return new DoctorDTO(
+        return new DoctorResponseDTO(
                 doctor.getId(),
                 doctor.getName(),
                 doctor.getImgUrl(),
@@ -38,32 +40,32 @@ public class DoctorMapper {
                         .collect(Collectors.toList()),
                 doctor.getStatus(),
                 doctor.getClinicId().getId(),
-                doctor.getUser() != null ? doctor.getUser().getId() : null
-
+                userMapper.toDTO(doctor.getUser())
         );
     }
 
-    public Doctor toEntity(DoctorDTO doctorDTO) {
-        if (doctorDTO == null) {
+    public Doctor toEntity(DoctorRequestDTO doctorRequestDTO) {
+        if (doctorRequestDTO == null) {
             return null;
         }
 
         Doctor doctor = new Doctor();
-        doctor.setName(doctorDTO.name());
-        doctor.setImgUrl(doctorDTO.imgUrl());
-        doctor.setCrm(doctorDTO.crm());
-        doctor.setCpf(doctorDTO.cpf());
-        doctor.setPhone(doctorDTO.phone());
-        doctor.setDescription(doctorDTO.description());
-        doctor.setQueryValue(doctorDTO.queryValue());
-        doctor.setAddress(addressMapper.toEntity(doctorDTO.address()));
+        doctor.setName(doctorRequestDTO.name());
+        doctor.setImgUrl(doctorRequestDTO.imgUrl());
+        doctor.setCrm(doctorRequestDTO.crm());
+        doctor.setCpf(doctorRequestDTO.cpf());
+        doctor.setPhone(doctorRequestDTO.phone());
+        doctor.setDescription(doctorRequestDTO.description());
+        doctor.setQueryValue(doctorRequestDTO.queryValue());
+        doctor.setAddress(addressMapper.toEntity(doctorRequestDTO.address()));
 
         // Clinic association
-        doctor.setClinicId(clinicRepository.findById(doctorDTO.clinicId())
-                .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + doctorDTO.clinicId())));
+        doctor.setClinicId(clinicRepository.findById(doctorRequestDTO.clinicId())
+                .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + doctorRequestDTO.clinicId())));
 
         doctor.setSpecialties(doctor.getSpecialties());
-        doctor.setStatus(doctorDTO.status());
+        doctor.setStatus(doctorRequestDTO.status());
+        doctor.setUser(userMapper.toEntity(doctorRequestDTO.user()));
 
         return doctor;
     }

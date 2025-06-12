@@ -8,30 +8,29 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class UserMapper {
 
-    public UserDTO toDTO(User user){
+    public UserResponseDTO toDTO(User user){
         if (user == null) {
             return null;
         }
 
-        return new UserDTO(
+        return new UserResponseDTO(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getPassword(),
                 user.getRole()
         );
     }
 
-    public User toEntity(UserDTO userDTO){
-        if (userDTO == null){
+    public User toEntity(UserRequestDTO userRequestDTO){
+        if (userRequestDTO == null){
             return null;
         }
 
         User user = new User();
-        user.setUsername(userDTO.username());
-        user.setEmail(userDTO.email());
-        user.setPassword(userDTO.password());
-        user.setRole(userDTO.roles());
+        user.setUsername(userRequestDTO.username());
+        user.setEmail(userRequestDTO.email());
+        user.setPassword(userRequestDTO.password());
+        user.setRole(userRequestDTO.roles());
         return user;
     }
 }

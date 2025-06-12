@@ -1,7 +1,8 @@
 package com.MediServe.apiMediServe.service.imp;
 
-import com.MediServe.apiMediServe.dto.patient.PatientDTO;
+import com.MediServe.apiMediServe.dto.patient.PatientRequestDTO;
 import com.MediServe.apiMediServe.dto.patient.PatientMapper;
+import com.MediServe.apiMediServe.dto.patient.PatientResponseDTO;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Patient;
 import com.MediServe.apiMediServe.model.User;
@@ -23,24 +24,19 @@ public class PatientServiceImp implements PatientService {
     private final PatientMapper patientMapper;
 
     @Override
-    public PatientDTO createPatient(PatientDTO patientDTO) {
-        Patient patient = patientMapper.toEntity(patientDTO);
-
-        User user = userRespository.findById(patientDTO.userId())
-                .orElseThrow(() -> new RecordNotFoundException(patientDTO.userId()));
-
-        patient.setUser(user);
-
+    public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
+        Patient patient = patientMapper.toEntity(patientRequestDTO);
+        userRespository.save(patient.getUser());
         return patientMapper.toDTO(patientRepository.save(patient));
     }
 
     @Override
-    public PatientDTO findByPatientId(Long id) {
+    public PatientResponseDTO findByPatientId(Long id) {
         return patientMapper.toDTO(patientRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id)));
     }
 
     @Override
-    public List<PatientDTO> findAllPatients() {
+    public List<PatientResponseDTO> findAllPatients() {
         return patientRepository.findAll().stream()
                 .map(patient -> patientMapper.toDTO(patient))
                 .collect(Collectors.toList());

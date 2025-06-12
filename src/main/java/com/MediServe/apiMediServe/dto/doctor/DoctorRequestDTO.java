@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.dto.doctor;
 
 import com.MediServe.apiMediServe.dto.address.AddressDTO;
+import com.MediServe.apiMediServe.dto.user.UserRequestDTO;
 import com.MediServe.apiMediServe.enums.DoctorStatus;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
@@ -8,8 +9,7 @@ import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-public record DoctorDTO(
-        Long id,
+public record DoctorRequestDTO(
         @NotBlank(message = "O nome é obrigatorio")
         @Size(min = 2, max = 100)
         String name,
@@ -45,5 +45,6 @@ public record DoctorDTO(
         @NotNull(message = "O ID da clínica é obrigatório")
         Long clinicId,
 
-        Long userId
+        @Valid
+        UserRequestDTO user
 ) {}
