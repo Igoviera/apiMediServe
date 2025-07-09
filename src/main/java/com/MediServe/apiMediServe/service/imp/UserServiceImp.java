@@ -3,7 +3,9 @@ package com.MediServe.apiMediServe.service.imp;
 import com.MediServe.apiMediServe.dto.user.UserRequestDTO;
 import com.MediServe.apiMediServe.dto.user.UserMapper;
 import com.MediServe.apiMediServe.dto.user.UserResponseDTO;
+import com.MediServe.apiMediServe.enums.UserStatus;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
+import com.MediServe.apiMediServe.model.User;
 import com.MediServe.apiMediServe.repository.UserRespository;
 import com.MediServe.apiMediServe.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +23,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     public UserResponseDTO createUser(UserRequestDTO userRequestDTO) {
-        return userMapper.toDTO(userRespository.save(userMapper.toEntity(userRequestDTO)));
+        User user = userMapper.toEntity(userRequestDTO);
+        user.setStatus(UserStatus.ATIVO);
+
+        User savedUser = userRespository.save(user);
+
+        return userMapper.toDTO(savedUser);
     }
     @Override
     public UserResponseDTO getByIdUser(Long id) {

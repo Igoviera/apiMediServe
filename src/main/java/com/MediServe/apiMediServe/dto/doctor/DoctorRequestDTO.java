@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.dto.doctor;
 
 import com.MediServe.apiMediServe.dto.address.AddressDTO;
+import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryRequestDTO;
 import com.MediServe.apiMediServe.dto.user.UserRequestDTO;
 import com.MediServe.apiMediServe.enums.DoctorStatus;
 import jakarta.validation.Valid;
@@ -39,11 +40,11 @@ public record DoctorRequestDTO(
         @NotEmpty(message = "O médico deve ter pelo menos uma especialidade")
         List<Long> specialtyIds,
 
-        @NotNull(message = "O estado do médico é obrigatório ( ATIVO, INATIVO, DE_LICENÇA)")
+        //@NotNull(message = "O estado do médico é obrigatório ( ATIVO, INATIVO, DE_LICENÇA)")
         DoctorStatus status,
 
-        @NotNull(message = "O ID da clínica é obrigatório")
-        Long clinicId,
+        //@NotNull(message = "O ID da clínica é obrigatório")
+        //Long clinicId,
 
         @Valid
         UserRequestDTO user

@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -62,12 +63,15 @@ public class Doctor {
     @ManyToOne
     @JoinColumn(name = "clinic_id")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Clinic clinicId;
+    private Clinic clinic;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "doctorId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
     private List<Appointment> appointments;
+
+    @OneToMany(mappedBy = "doctor", cascade = CascadeType.ALL)
+    private List<DoctorDiary> diaries = new ArrayList<>();
 }

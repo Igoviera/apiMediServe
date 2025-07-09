@@ -4,12 +4,11 @@ import com.MediServe.apiMediServe.enums.StatusAppointment;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-public record AppointmentDTO(
-
-        Long id,
-
+public record AppointmentRequestDTO(
         @NotNull(message = "O ID da clinica é obrigatório.")
         Long clinicId,
 
@@ -19,10 +18,13 @@ public record AppointmentDTO(
         @NotNull(message = "O ID do paciente é obrigatório.")
         Long patientId,
 
-        @NotNull(message = "A data da consulta é obrigatória.")
-        @FutureOrPresent(message = "A data da consulta deve estar no presente ou no futuro.")
-        LocalDateTime data,
+        @NotNull(message = "O dia é obrigatório.")
+        DayOfWeek dayOfWeek,
+
+        @NotNull(message = "O horário é obrigatório.")
+        LocalTime time,
 
         @NotNull(message = "O status da consulta é obrigatório.")
         StatusAppointment status
-) {}
+) {
+}

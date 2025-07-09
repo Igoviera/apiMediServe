@@ -1,7 +1,7 @@
 package com.MediServe.apiMediServe.dto.patient;
 
 import com.MediServe.apiMediServe.dto.address.AddressDTO;
-import com.MediServe.apiMediServe.dto.appointment.AppointmentDTO;
+import com.MediServe.apiMediServe.dto.appointment.AppointmentRequestDTO;
 import com.MediServe.apiMediServe.dto.user.UserRequestDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -25,7 +25,7 @@ public record PatientRequestDTO(
         @Valid
         AddressDTO address,
 
-        List<AppointmentDTO> appointments,
+        List<AppointmentRequestDTO> appointments,
 
         @Valid
         UserRequestDTO user

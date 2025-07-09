@@ -46,9 +46,9 @@ public class Clinic {
     @Valid
     private Address address;
 
-    @OneToMany(mappedBy = "clinicId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "clinic", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Doctor> doctors;
 
-    @OneToMany(mappedBy = "clinicId")
+    @OneToMany(mappedBy = "clinic")
     private List<Appointment> appointments;
 }

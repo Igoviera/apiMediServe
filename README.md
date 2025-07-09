@@ -21,7 +21,8 @@ Com ela, é possível:
 A aplicação foi construída com Java, Spring Boot, JPA/Hibernate e segue boas práticas de desenvolvimento como separação por camadas, uso de DTOs e tratamento centralizado de exceções.
 
 ## Diagrama de Classes (Domínio da API)
-![Descrição da Imagem](src/main/resources/static/uml.png)
+
+![Descrição da Imagem](src/main/resources/static/uml.jpg)
 
 ## ✔️ Técnicas e tecnologias utilizadas
 

@@ -1,19 +1,17 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.dto.appointment.AppointmentDTO;
+import com.MediServe.apiMediServe.dto.appointment.AppointmentRequestDTO;
 import com.MediServe.apiMediServe.dto.appointment.AppointmentDetailDTO;
+import com.MediServe.apiMediServe.dto.appointment.AppointmentResponseDTO;
 import com.MediServe.apiMediServe.service.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -35,8 +33,8 @@ public class AppointmentController {
             @ApiResponse(responseCode = "400", description = "Dados inválidos para agendamento"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public AppointmentDTO createScheduling(@Valid @RequestBody AppointmentDTO appointmentDTO) {
-        return appointmentService.createAppointment(appointmentDTO);
+    public AppointmentResponseDTO createScheduling(@Valid @RequestBody AppointmentRequestDTO appointmentRequestDTO) {
+        return appointmentService.createAppointment(appointmentRequestDTO);
     }
 
     @GetMapping
@@ -49,13 +47,12 @@ public class AppointmentController {
             @ApiResponse(responseCode = "200", description = "Agendamentos retornados com sucesso"),
             @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
     })
-    public List<AppointmentDetailDTO> findAll() {
+    public List<AppointmentResponseDTO> findAll() {
         return appointmentService.findAll();
     }
     @GetMapping("/{id}")
-    public AppointmentDTO findById(@PathVariable("id") Long id){
-        AppointmentDTO dto = appointmentService.findById(id);
-        return dto;
+    public AppointmentResponseDTO findById(@PathVariable("id") Long id){
+        return appointmentService.findById(id);
     }
 
 

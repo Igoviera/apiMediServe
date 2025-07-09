@@ -4,15 +4,15 @@ import com.MediServe.apiMediServe.enums.StatusAppointment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+import java.time.DayOfWeek;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 @Getter
+@ToString
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,23 +23,27 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @FutureOrPresent(message = "A data da consulta deve estar no presente ou no futuro.")
-    private LocalDateTime appointmentDateTime;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private DayOfWeek dayOfWeek;
+
+    @Column(nullable = false)
+    private LocalTime time;
 
     @NotNull(message = "O ID do paciente é obrigatório.")
     @ManyToOne
     @JoinColumn(name = "patient_id")
-    private Patient patientId;
+    private Patient patient;
 
     @NotNull(message = "O ID do médico é obrigatório.")
     @ManyToOne
     @JoinColumn(name = "doctor_id")
-    private Doctor doctorId;
+    private Doctor doctor;
 
     @NotNull(message = "O ID da clinica é obrigatório.")
     @ManyToOne
     @JoinColumn(name = "clinic_id")
-    private Clinic clinicId;
+    private Clinic clinic;
 
     @Enumerated(EnumType.STRING)
     @NotNull(message = "O status da consulta é obrigatório.")

@@ -9,4 +9,5 @@ public interface PatientService {
     PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO);
     List<PatientResponseDTO> findAllPatients();
     PatientResponseDTO findByPatientId(Long id);
+    PatientResponseDTO updatePatient(Long id, PatientRequestDTO patientRequestDTO);
 }

@@ -2,6 +2,7 @@ package com.MediServe.apiMediServe.service.imp;
 
 import com.MediServe.apiMediServe.dto.specialty.SpecialtyDTO;
 import com.MediServe.apiMediServe.dto.specialty.SpecialtyMapper;
+import com.MediServe.apiMediServe.exception.DuplicateException;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Specialty;
 import com.MediServe.apiMediServe.repository.SpecialtyRepository;
@@ -21,7 +22,12 @@ public class SpecialtyServiceImp implements SpecialtyService {
 
     @Override
     public SpecialtyDTO createSpecialty(SpecialtyDTO specialtyDTO) {
+        Specialty specialty = specialtyRepository.findByName(specialtyDTO.name());
+        if (specialty != null){
+           throw new DuplicateException(String.format("A especialidade com o nome %s já existe.", specialty.getName()));
+        }
         return specialtyMapper.toDTO(specialtyRepository.save(specialtyMapper.toEntity(specialtyDTO)));
+
     }
 
     @Override
@@ -47,6 +53,6 @@ public class SpecialtyServiceImp implements SpecialtyService {
 
         existengSpecialty.setName(specialtyDTO.name());
 
-       return specialtyMapper.toDTO(specialtyRepository.save(existengSpecialty));
+        return specialtyMapper.toDTO(specialtyRepository.save(existengSpecialty));
     }
 }

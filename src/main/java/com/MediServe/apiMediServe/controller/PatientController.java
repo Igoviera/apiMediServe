@@ -64,4 +64,9 @@ public class PatientController {
     public PatientResponseDTO findByPatientId(@PathVariable("id") Long id){
        return patientService.findByPatientId(id);
     }
+
+    @PutMapping("/{id}")
+    public PatientResponseDTO updatePatient(@PathVariable("id") Long id, @RequestBody PatientRequestDTO patientRequestDTO){
+        return patientService.updatePatient(id, patientRequestDTO);
+    }
 }

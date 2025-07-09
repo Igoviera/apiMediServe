@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.model;
 
 import com.MediServe.apiMediServe.enums.UserRole;
+import com.MediServe.apiMediServe.enums.UserStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,9 @@ public class User {
     @JsonIgnore
     @NotBlank(message = "A senha é obrigatória")
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private UserStatus status;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

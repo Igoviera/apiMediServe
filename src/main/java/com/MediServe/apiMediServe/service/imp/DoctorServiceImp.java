@@ -4,6 +4,11 @@ import com.MediServe.apiMediServe.dto.doctor.DoctorRequestDTO;
 import com.MediServe.apiMediServe.dto.doctor.DoctorMapper;
 import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.dto.doctor.DoctorResponseDTO;
+import com.MediServe.apiMediServe.dto.user.UserMapper;
+import com.MediServe.apiMediServe.enums.DoctorStatus;
+import com.MediServe.apiMediServe.enums.UserRole;
+import com.MediServe.apiMediServe.enums.UserStatus;
+import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.*;
 import com.MediServe.apiMediServe.repository.ClinicRepository;
@@ -30,21 +35,30 @@ public class DoctorServiceImp implements DoctorService {
     private final UserRespository userRespository;
     private final DoctorMapper doctorMapper;
     private final AddressMapper addressMapper;
+    private final UserMapper userMapper;
 
     @Override
     @Transactional
     public DoctorResponseDTO createDoctor(DoctorRequestDTO doctorRequestDTO) {
+        if (userRespository.existsByEmail(doctorRequestDTO.user().email())){
+            throw new EmailAlreadyExists();
+        }
         Doctor doctor = doctorMapper.toEntity(doctorRequestDTO);
 
 //        String encodedPassword = passwordEncoder.encode(doctor.getUser().getPassword());
 //        doctor.getUser().setPassword(encodedPassword);
 
-        userRespository.save(doctor.getUser());
+        User user = userMapper.toEntity(doctorRequestDTO.user());
+        user.setStatus(UserStatus.ATIVO);
+        user.setRole(UserRole.MEDICO);
+        userRespository.save(user);
+
+        doctor.setUser(user);
 
         // Validar e associar a clínica
-        Clinic clinic = clinicRepository.findById(doctorRequestDTO.clinicId())
-                .orElseThrow(() -> new RecordNotFoundException(doctorRequestDTO.clinicId()));
-        doctor.setClinicId(clinic);
+        Clinic clinic = clinicRepository.findById(1L)
+                .orElseThrow(() -> new RecordNotFoundException(1L));
+        doctor.setClinic(clinic);
 
         // Validar e associar as especialidades
         List<Specialty> specialties = doctorRequestDTO.specialtyIds().stream()
@@ -52,6 +66,7 @@ public class DoctorServiceImp implements DoctorService {
                         .orElseThrow(() -> new RecordNotFoundException(specialtyId)))
                 .collect(Collectors.toList());
         doctor.setSpecialties(specialties);
+        doctor.setStatus(DoctorStatus.ATIVO);
 
         // Salvar o médico
         return doctorMapper.toDTO(doctorRepository.save(doctor));

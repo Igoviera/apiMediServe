@@ -1,7 +1,9 @@
 package com.MediServe.apiMediServe.dto.appointment;
 
-import com.MediServe.apiMediServe.dto.appointment.AppointmentDTO;
 import com.MediServe.apiMediServe.model.Appointment;
+import com.MediServe.apiMediServe.model.Clinic;
+import com.MediServe.apiMediServe.model.Doctor;
+import com.MediServe.apiMediServe.model.Patient;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -9,44 +11,35 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class AppointmentMapper {
 
-    public AppointmentDTO toDTO(Appointment appointment) {
+    public AppointmentResponseDTO toDTO(Appointment appointment) {
         if (appointment == null) {
             return null;
         }
 
-        return new AppointmentDTO(
+        return new AppointmentResponseDTO(
                 appointment.getId(),
-                appointment.getClinicId().getId(),
-                appointment.getDoctorId().getId(),
-                appointment.getPatientId().getId(),
-                appointment.getAppointmentDateTime(),
+                appointment.getClinic().getName(),
+                appointment.getDoctor().getName(),
+                appointment.getPatient().getName(),
+                appointment.getDayOfWeek(),
+                appointment.getTime(),
                 appointment.getStatusAppointment()
         );
     }
 
-    public AppointmentDetailDTO toDetailDTO(Appointment appointment) {
-        if (appointment == null) {
-            return null;
-        }
+    public Appointment toEntity(AppointmentRequestDTO appointmentRequestDTO, Clinic clinic, Doctor doctor, Patient patient) {
 
-        return new AppointmentDetailDTO(
-                appointment.getId(),
-                appointment.getPatientId().getName(),
-                appointment.getDoctorId().getName(),
-                appointment.getAppointmentDateTime(),
-                appointment.getStatusAppointment()
-        );
-    }
-
-    public Appointment toEntity(AppointmentDTO appointmentDTO) {
-
-        if (appointmentDTO == null) {
+        if (appointmentRequestDTO == null) {
             return null;
         }
 
         Appointment appointment = new Appointment();
-        appointment.setAppointmentDateTime(appointmentDTO.data());
-        appointment.setStatusAppointment(appointmentDTO.status());
+        appointment.setClinic(clinic);
+        appointment.setDoctor(doctor);
+        appointment.setPatient(patient);
+        appointment.setDayOfWeek(appointmentRequestDTO.dayOfWeek());
+        appointment.setTime(appointmentRequestDTO.time());
+        appointment.setStatusAppointment(appointmentRequestDTO.status());
 
         return appointment;
     }

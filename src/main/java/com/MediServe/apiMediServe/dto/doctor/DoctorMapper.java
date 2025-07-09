@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.dto.doctor;
 
 import com.MediServe.apiMediServe.dto.address.AddressMapper;
+import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryMapper;
 import com.MediServe.apiMediServe.dto.specialty.SpecialtyMapper;
 import com.MediServe.apiMediServe.dto.user.UserMapper;
 import com.MediServe.apiMediServe.model.Doctor;
@@ -19,6 +20,7 @@ public class DoctorMapper {
     private final AddressMapper addressMapper;
     private final SpecialtyMapper specialtyMapper;
     private final UserMapper userMapper;
+    private final DoctorDiaryMapper doctorDiaryMapper;
 
     public DoctorResponseDTO toDTO(Doctor doctor) {
         if (doctor == null) {
@@ -35,11 +37,9 @@ public class DoctorMapper {
                 doctor.getDescription(),
                 doctor.getQueryValue(),
                 addressMapper.toDTO(doctor.getAddress()),
-                doctor.getSpecialties().stream()
-                        .map(Specialty::getId)
-                        .collect(Collectors.toList()),
+                doctor.getSpecialties().stream().map(specialty -> specialty.getName()).collect(Collectors.toList()),
                 doctor.getStatus(),
-                doctor.getClinicId().getId(),
+                doctor.getClinic().getId(),
                 userMapper.toDTO(doctor.getUser())
         );
     }
@@ -60,8 +60,8 @@ public class DoctorMapper {
         doctor.setAddress(addressMapper.toEntity(doctorRequestDTO.address()));
 
         // Clinic association
-        doctor.setClinicId(clinicRepository.findById(doctorRequestDTO.clinicId())
-                .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + doctorRequestDTO.clinicId())));
+//        doctor.setClinic(clinicRepository.findById(doctorRequestDTO.clinicId())
+//                .orElseThrow(() -> new RuntimeException("Clinic not found with id: " + doctorRequestDTO.clinicId())));
 
         doctor.setSpecialties(doctor.getSpecialties());
         doctor.setStatus(doctorRequestDTO.status());

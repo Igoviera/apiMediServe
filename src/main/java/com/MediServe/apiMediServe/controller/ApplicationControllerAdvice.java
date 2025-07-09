@@ -1,7 +1,9 @@
 package com.MediServe.apiMediServe.controller;
 
+import com.MediServe.apiMediServe.exception.AppointmentConflictException;
+import com.MediServe.apiMediServe.exception.DuplicateException;
 import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
-import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
+//import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -31,10 +33,28 @@ public class ApplicationControllerAdvice {
                 .collect(Collectors.toList());
         return new ApiErros(errors);
     }
-    @ExceptionHandler(InvalidTimeFormatException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiErros handleTimeFormatException(InvalidTimeFormatException ex){
-        return  new ApiErros(ex.getMessage());
+    @ExceptionHandler(DuplicateException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiErros handleDuplicateException(DuplicateException ex){
+        return new ApiErros(ex.getMessage());
+    }
+
+    @ExceptionHandler(AppointmentConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiErros handleAppoitmentConclict(AppointmentConflictException ex){
+        return new ApiErros(ex.getMessage());
+    }
+
+//    @ExceptionHandler(InvalidTimeFormatException.class)
+//    @ResponseStatus(HttpStatus.NOT_FOUND)
+//    public ApiErros handleTimeFormatException(InvalidTimeFormatException ex){
+//        return  new ApiErros(ex.getMessage());
+//    }
+
+    @ExceptionHandler(EmailAlreadyExists.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErros handleEmailAlreadyExistsException(EmailAlreadyExists ex){
+        return new ApiErros(ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -43,9 +63,4 @@ public class ApplicationControllerAdvice {
         return new ApiErros(ex.getMessage());
     }
 
-    @ExceptionHandler(EmailAlreadyExists.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErros handleEmailAlreadyExistsException(EmailAlreadyExists ex){
-        return new ApiErros(ex.getMessage());
-    }
 }

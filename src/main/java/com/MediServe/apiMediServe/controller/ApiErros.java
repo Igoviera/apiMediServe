@@ -12,9 +12,7 @@ public class ApiErros {
     public ApiErros(List<String> errors){
         this.errors = errors;
     }
-
     public ApiErros(String messageErrors){
-
         this.errors = Arrays.asList(messageErrors);
     }
 }
