@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.controller;
 
+import com.MediServe.apiMediServe.dto.doctorDiary.AvailableTimesDTO;
 import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryMapper;
 import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryRequestDTO;
 import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryResponseDTO;
@@ -8,6 +9,7 @@ import com.MediServe.apiMediServe.service.DoctorDiaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -30,6 +32,18 @@ public class DoctorDiaryController {
     @GetMapping
     public List<DoctorDiaryResponseDTO> listarTodos() {
         return doctorDiaryService.findAll();
+    }
+
+    @GetMapping("/{id}/schedule")
+    public ResponseEntity<List<AvailableTimesDTO>> getDoctorDiarySchedule(@PathVariable Long id) {
+        List<AvailableTimesDTO> schedule = doctorDiaryService.getDaySchedule(id);
+        return ResponseEntity.ok(schedule);
+    }
+
+
+    @GetMapping("/{id}")
+    public List<DoctorDiaryResponseDTO> BuscarAgendaPorMedico(@PathVariable Long id){
+        return doctorDiaryService.BuscarAgendaPorMedico(id);
     }
 
     @PostMapping

@@ -22,9 +22,6 @@ public record AppointmentRequestDTO(
         DayOfWeek dayOfWeek,
 
         @NotNull(message = "O horário é obrigatório.")
-        LocalTime time,
-
-        @NotNull(message = "O status da consulta é obrigatório.")
-        StatusAppointment status
+        LocalTime time
 ) {
 }

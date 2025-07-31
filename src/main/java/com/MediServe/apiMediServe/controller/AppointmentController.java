@@ -37,6 +37,11 @@ public class AppointmentController {
         return appointmentService.createAppointment(appointmentRequestDTO);
     }
 
+    @PostMapping("{id}/cancel")
+    public void cancelAppointment(@PathVariable("id") Long id){
+        appointmentService.cancelAppointment(id);
+    }
+
     @GetMapping
     @Operation(
             summary = "Listar agendamentos",

@@ -39,7 +39,6 @@ public class AppointmentMapper {
         appointment.setPatient(patient);
         appointment.setDayOfWeek(appointmentRequestDTO.dayOfWeek());
         appointment.setTime(appointmentRequestDTO.time());
-        appointment.setStatusAppointment(appointmentRequestDTO.status());
 
         return appointment;
     }

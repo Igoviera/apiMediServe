@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.service.imp;
 
+import com.MediServe.apiMediServe.dto.doctorDiary.AvailableTimesDTO;
 import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryMapper;
 import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryRequestDTO;
 import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryResponseDTO;
@@ -11,6 +12,7 @@ import com.MediServe.apiMediServe.repository.AppointmentRepository;
 import com.MediServe.apiMediServe.repository.DoctorDiaryRepository;
 import com.MediServe.apiMediServe.repository.DoctorRepository;
 import com.MediServe.apiMediServe.service.DoctorDiaryService;
+import com.MediServe.apiMediServe.utils.DateUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -72,6 +74,44 @@ public class DoctorDiaryServiceImp implements DoctorDiaryService {
         return horariosDisponiveis;
     }
 
+    public List<AvailableTimesDTO> getDaySchedule(Long doctorId) {
+        List<DoctorDiary> diaries = diaryRepository.findByDoctorId(doctorId);
+
+        if (diaries.isEmpty()) {
+            throw new RecordNotFoundException("Nenhuma agenda encontrada para o médico com id: " + doctorId);
+        }
+
+        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);
+
+        return diaries.stream().map(diary -> {
+            DayOfWeek dayOfWeek = diary.getDayOfWeek();
+
+            Set<LocalTime> horariosOcupados = appointments.stream()
+                    .filter(appt -> appt.getDayOfWeek().equals(dayOfWeek))
+                    .map(Appointment::getTime)
+                    .collect(Collectors.toSet());
+
+            LocalTime startTime = diary.getStartTime();
+            LocalTime endTime = diary.getEndTime();
+            int durationMinutes = diary.getDurationMinutes();
+
+            List<String> timeSlots = new ArrayList<>();
+            LocalTime timePointer = startTime;
+
+            while (!timePointer.isAfter(endTime.minusMinutes(durationMinutes))) {
+                if (!horariosOcupados.contains(timePointer)) {
+                    timeSlots.add(timePointer.toString()); // formato HH:mm:ss
+                }
+                timePointer = timePointer.plusMinutes(durationMinutes);
+            }
+
+            String dayLabel = DateUtils.getDayLabel(dayOfWeek);
+
+            return new AvailableTimesDTO(dayLabel, timeSlots);
+        }).collect(Collectors.toList());
+    }
+
+
     @Override
     public DoctorDiaryResponseDTO buscarPorId(Long id) {
         return doctorDiaryMapper.toDTO(
@@ -97,5 +137,10 @@ public class DoctorDiaryServiceImp implements DoctorDiaryService {
     @Override
     public List<DoctorDiaryResponseDTO> findAll() {
         return diaryRepository.findAll().stream().map(doctorDiary -> doctorDiaryMapper.toDTO(doctorDiary)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DoctorDiaryResponseDTO> BuscarAgendaPorMedico(Long id) {
+        return diaryRepository.findByDoctorId(id).stream().map(doctorDiary -> doctorDiaryMapper.toDTO(doctorDiary)).collect(Collectors.toList());
     }
 }

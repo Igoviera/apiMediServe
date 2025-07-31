@@ -3,6 +3,7 @@ package com.MediServe.apiMediServe.service.imp;
 import com.MediServe.apiMediServe.dto.appointment.AppointmentRequestDTO;
 import com.MediServe.apiMediServe.dto.appointment.AppointmentMapper;
 import com.MediServe.apiMediServe.dto.appointment.AppointmentResponseDTO;
+import com.MediServe.apiMediServe.enums.StatusAppointment;
 import com.MediServe.apiMediServe.exception.AppointmentConflictException;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.*;
@@ -54,14 +55,29 @@ public class AppointmentServiceImp implements AppointmentService {
                 .orElseThrow(() -> new RecordNotFoundException("Paciente não encontrado com id: " + appointmentRequestDTO.patientId()));
 
 
-        validateAppointmentTime(appointmentRequestDTO, clinic); // agora com horário da clínica
+        validateAppointmentTime(appointmentRequestDTO, clinic);
         validateExistsAppointment(appointmentRequestDTO, doctor);
         validateDoctorAvailability(appointmentRequestDTO, doctor);
 
         Appointment appointment = appointmentMapper.toEntity(appointmentRequestDTO, clinic, doctor, patient);
+        appointment.setStatusAppointment(StatusAppointment.AGENDADA);
 
         return appointmentMapper.toDTO(appointmentRepository.save(appointment));
 
+    }
+
+    @Override
+    public void cancelAppointment(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Agendamendo não encontrado com id: " + id));
+
+        if (StatusAppointment.CANCELADA.equals(appointment.getStatusAppointment())){
+            throw new AppointmentConflictException("Consulta já foi cancelada.");
+        }
+
+        appointment.setStatusAppointment(StatusAppointment.CANCELADA);
+
+        appointmentRepository.save(appointment);
     }
 
     @Override
