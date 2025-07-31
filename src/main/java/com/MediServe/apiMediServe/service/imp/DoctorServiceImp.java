@@ -22,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.print.Doc;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -74,7 +75,7 @@ public class DoctorServiceImp implements DoctorService {
 
     @Override
     public Page<DoctorResponseDTO> getAllDoctor(Pageable pageable) {
-        return doctorRepository.findAll(pageable)
+        return doctorRepository.findAllByStatus(DoctorStatus.ATIVO,pageable)
                 .map(doctor -> doctorMapper.toDTO(doctor));
     }
 
@@ -82,6 +83,13 @@ public class DoctorServiceImp implements DoctorService {
     public DoctorResponseDTO getByIdDoctor(Long id) {
         return doctorMapper.toDTO(doctorRepository.findById(id)
                 .orElseThrow(() -> new RecordNotFoundException(id)));
+    }
+
+    @Override
+    public void remove(Long id) {
+      Doctor doctor = doctorRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
+      doctor.setStatus(DoctorStatus.INATIVO);
+      doctorRepository.save(doctor);
     }
 
 //    @Override

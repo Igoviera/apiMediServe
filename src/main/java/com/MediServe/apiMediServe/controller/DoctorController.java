@@ -80,4 +80,9 @@ public class DoctorController {
 //    public DoctorRequestDTO updateDoctor(@Valid @PathVariable("id") Long id, @RequestBody DoctorRequestDTO doctorRequestDTO){
 //        return doctorService.updateDoctor(id, doctorRequestDTO);
 //    }
+
+    @DeleteMapping("/{id}")
+    public void remove(@PathVariable Long id){
+        doctorService.getByIdDoctor(id);
+    }
 }

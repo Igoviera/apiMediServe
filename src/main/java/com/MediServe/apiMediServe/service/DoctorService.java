@@ -9,5 +9,6 @@ public interface DoctorService {
     DoctorResponseDTO createDoctor(DoctorRequestDTO doctorRequestDTO);
     Page<DoctorResponseDTO> getAllDoctor(Pageable pageable);
     DoctorResponseDTO getByIdDoctor(Long id);
+    void remove(Long id);
 //    DoctorRequestDTO updateDoctor(Long id, DoctorRequestDTO doctorRequestDTO);
 }
