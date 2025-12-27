@@ -1,10 +1,7 @@
 package com.MediServe.apiMediServe.controller;
 
-import com.MediServe.apiMediServe.exception.AppointmentConflictException;
-import com.MediServe.apiMediServe.exception.DuplicateException;
-import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
+import com.MediServe.apiMediServe.exception.*;
 //import com.MediServe.apiMediServe.exception.InvalidTimeFormatException;
-import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -60,6 +57,12 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErros handleIllegalArgumentException(IllegalArgumentException ex) {
+        return new ApiErros(ex.getMessage());
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public ApiErros handleBusinessException(BusinessException ex) {
         return new ApiErros(ex.getMessage());
     }
 

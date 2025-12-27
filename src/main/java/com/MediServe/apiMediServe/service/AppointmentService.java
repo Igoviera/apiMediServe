@@ -11,4 +11,5 @@ public interface AppointmentService {
     void cancelAppointment(Long id);
     List<AppointmentResponseDTO> findAll();
     AppointmentResponseDTO findById(Long id);
+    void finishAppoitment(Long id);
 }

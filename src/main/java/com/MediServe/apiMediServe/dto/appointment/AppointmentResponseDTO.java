@@ -12,8 +12,7 @@ public record AppointmentResponseDTO(
         String clinicName,
         String doctorName,
         String patientName,
-        DayOfWeek dayOfWeek,
-        LocalTime time,
+        LocalDateTime date,
         StatusAppointment status
 ) {
 }

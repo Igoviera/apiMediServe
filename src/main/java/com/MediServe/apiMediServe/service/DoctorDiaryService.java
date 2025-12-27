@@ -11,9 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface DoctorDiaryService {
-    List<LocalTime> gerarHorariosDisponiveis(Long id);
+//    List<LocalTime> gerarHorariosDisponiveis(Long id);
+//    List<AvailableTimesDTO> getDaySchedule(Long id);
 
-    List<AvailableTimesDTO> getDaySchedule(Long id);
+
+
     DoctorDiaryResponseDTO buscarPorId(Long id);
 
     DoctorDiaryResponseDTO save(DoctorDiaryRequestDTO diary);

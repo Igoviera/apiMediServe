@@ -37,7 +37,12 @@ public class AppointmentController {
         return appointmentService.createAppointment(appointmentRequestDTO);
     }
 
-    @PostMapping("{id}/cancel")
+    @PostMapping("/{id}/finish")
+    public void finishAppoitment(@PathVariable Long id){
+        appointmentService.finishAppoitment(id);
+    }
+
+    @PostMapping("/{id}/cancel")
     public void cancelAppointment(@PathVariable("id") Long id){
         appointmentService.cancelAppointment(id);
     }

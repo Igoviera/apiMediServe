@@ -23,12 +23,8 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private DayOfWeek dayOfWeek;
-
-    @Column(nullable = false)
-    private LocalTime time;
+    @NotNull
+    private LocalDateTime date;
 
     @NotNull(message = "O ID do paciente é obrigatório.")
     @ManyToOne

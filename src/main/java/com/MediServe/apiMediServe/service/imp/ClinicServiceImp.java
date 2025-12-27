@@ -1,5 +1,6 @@
 package com.MediServe.apiMediServe.service.imp;
 
+import com.MediServe.apiMediServe.dto.address.AddressMapper;
 import com.MediServe.apiMediServe.dto.clinic.ClinicDTO;
 import com.MediServe.apiMediServe.exception.EmailAlreadyExists;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
@@ -19,6 +20,7 @@ public class ClinicServiceImp implements ClinicService {
 
     private final ClinicRepository clinicRepository;
     private final ClinicMapper clinicMapper;
+    private final AddressMapper addressMapper;
 
     @Override
     public ClinicDTO createClinic(ClinicDTO clinicDTO) {
@@ -44,15 +46,15 @@ public class ClinicServiceImp implements ClinicService {
 
     @Override
     public ClinicDTO updateClinic(Long clinicId, ClinicDTO clinicDTO) {
-        return clinicRepository.findById(clinicId)
-                .map(recordFound -> {
-                    Clinic updateClinic = clinicMapper.toEntity(clinicDTO);
-                    recordFound.setName(updateClinic.getName());
-                    recordFound.setEmail(updateClinic.getEmail());
-                    recordFound.setPhone(updateClinic.getPhone());
-                    recordFound.setOpeningTime(updateClinic.getOpeningTime());
-                    recordFound.setClosingTime(updateClinic.getClosingTime());
-                    return clinicMapper.toDTO(clinicRepository.save(recordFound));
-                }).orElseThrow(() -> new RecordNotFoundException(clinicId));
+       Clinic clinicFound = clinicRepository.findById(clinicId)
+               .orElseThrow(() -> new RecordNotFoundException(clinicId));
+
+        clinicFound.setName(clinicDTO.name());
+        clinicFound.setEmail(clinicDTO.email());
+        clinicFound.setPhone(clinicDTO.phone());
+        clinicFound.setImgURL(clinicDTO.imgURL());
+        clinicFound.setAddress(addressMapper.toEntity(clinicDTO.address()));
+
+        return clinicMapper.toDTO(clinicRepository.save(clinicFound));
     }
 }

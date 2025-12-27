@@ -18,10 +18,7 @@ public record AppointmentRequestDTO(
         @NotNull(message = "O ID do paciente é obrigatório.")
         Long patientId,
 
-        @NotNull(message = "O dia é obrigatório.")
-        DayOfWeek dayOfWeek,
-
-        @NotNull(message = "O horário é obrigatório.")
-        LocalTime time
+        @NotNull(message = "A data é obrigatoria")
+        LocalDateTime date
 ) {
 }

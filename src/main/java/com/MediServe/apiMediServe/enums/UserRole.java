@@ -1,7 +1,15 @@
 package com.MediServe.apiMediServe.enums;
 
-public enum UserRole {
+import org.springframework.security.core.GrantedAuthority;
+
+public enum UserRole implements GrantedAuthority {
     PACIENTE,
     MEDICO,
-    ADMIN
+    ADMIN,
+    RECEPCIONISTA;
+
+    @Override
+    public String getAuthority() {
+        return "ROLE_" + this.name();
+    }
 }

@@ -21,8 +21,7 @@ public class AppointmentMapper {
                 appointment.getClinic().getName(),
                 appointment.getDoctor().getName(),
                 appointment.getPatient().getName(),
-                appointment.getDayOfWeek(),
-                appointment.getTime(),
+                appointment.getDate(),
                 appointment.getStatusAppointment()
         );
     }
@@ -37,8 +36,7 @@ public class AppointmentMapper {
         appointment.setClinic(clinic);
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
-        appointment.setDayOfWeek(appointmentRequestDTO.dayOfWeek());
-        appointment.setTime(appointmentRequestDTO.time());
+        appointment.setDate(appointmentRequestDTO.date());
 
         return appointment;
     }

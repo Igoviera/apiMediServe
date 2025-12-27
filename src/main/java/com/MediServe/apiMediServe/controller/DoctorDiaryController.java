@@ -6,6 +6,7 @@ import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryRequestDTO;
 import com.MediServe.apiMediServe.dto.doctorDiary.DoctorDiaryResponseDTO;
 import com.MediServe.apiMediServe.model.DoctorDiary;
 import com.MediServe.apiMediServe.service.DoctorDiaryService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,11 +35,11 @@ public class DoctorDiaryController {
         return doctorDiaryService.findAll();
     }
 
-    @GetMapping("/{id}/schedule")
-    public ResponseEntity<List<AvailableTimesDTO>> getDoctorDiarySchedule(@PathVariable Long id) {
-        List<AvailableTimesDTO> schedule = doctorDiaryService.getDaySchedule(id);
-        return ResponseEntity.ok(schedule);
-    }
+//    @GetMapping("/{id}/schedule")
+//    public ResponseEntity<List<AvailableTimesDTO>> getDoctorDiarySchedule(@PathVariable Long id) {
+//        List<AvailableTimesDTO> schedule = doctorDiaryService.getDaySchedule(id);
+//        return ResponseEntity.ok(schedule);
+//    }
 
 
     @GetMapping("/{id}")
@@ -48,12 +49,12 @@ public class DoctorDiaryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DoctorDiaryResponseDTO criar(@RequestBody DoctorDiaryRequestDTO diary) {
+    public DoctorDiaryResponseDTO criar(@Valid @RequestBody DoctorDiaryRequestDTO diary) {
         return doctorDiaryService.save(diary);
     }
 
-    @GetMapping("/{id}/horarios")
-    public List<LocalTime> getHorarioDisponiveis(@PathVariable Long id){
-      return doctorDiaryService.gerarHorariosDisponiveis(id);
-    }
+//    @GetMapping("/{id}/horarios")
+//    public List<LocalTime> getHorarioDisponiveis(@PathVariable Long id){
+//      return doctorDiaryService.gerarHorariosDisponiveis(id);
+//    }
 }

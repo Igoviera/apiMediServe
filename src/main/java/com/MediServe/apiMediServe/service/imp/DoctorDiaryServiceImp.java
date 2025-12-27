@@ -41,75 +41,75 @@ public class DoctorDiaryServiceImp implements DoctorDiaryService {
         this.doctorDiaryMapper = doctorDiaryMapper;
     }
 
-    @Override
-    public List<LocalTime> gerarHorariosDisponiveis(Long id) {
-        DoctorDiary diary = diaryRepository.findById(id)
-                .orElseThrow(() -> new RecordNotFoundException("Agenda não encontrada com id: " + id));
+//    @Override
+//    public List<LocalTime> gerarHorariosDisponiveis(Long id) {
+//        DoctorDiary diary = diaryRepository.findById(id)
+//                .orElseThrow(() -> new RecordNotFoundException("Agenda não encontrada com id: " + id));
+//
+//        DayOfWeek dia = diary.getDayOfWeek();
+//
+//        List<Appointment> appointments = appointmentRepository.findByDoctor(diary.getDoctor());
+//
+//        Set<LocalTime> horariosOcupados = appointments.stream()
+//                .filter(appointment -> appointment.getDate().getDayOfWeek().equals(dia))
+//                .map(appointment -> appointment.getDate().toLocalTime())
+//                .collect(Collectors.toSet());
+//
+//        // Gera horarios disponiveis
+//        LocalTime startTime = diary.getStartTime();
+//        LocalTime endTime = diary.getEndTime();
+//        int durationMinutes = diary.getDurationMinutes();
+//
+//        List<LocalTime> horariosDisponiveis = new ArrayList<>();
+//
+//        while (startTime.plusMinutes(durationMinutes).compareTo(endTime) <= 0) {
+//            if (!horariosOcupados.contains(startTime)) {
+//                horariosDisponiveis.add(startTime);
+//            }
+//            startTime = startTime.plusMinutes(durationMinutes);
+//        }
+//
+//        System.out.println(horariosDisponiveis);
+//
+//        return horariosDisponiveis;
+//    }
 
-        DayOfWeek dia = diary.getDayOfWeek();
-
-        List<Appointment> appointments = appointmentRepository.findByDoctor(diary.getDoctor());
-
-        Set<LocalTime> horariosOcupados = appointments.stream()
-                .filter(appointment -> appointment.getDayOfWeek().equals(dia))
-                .map(appointment -> appointment.getTime())
-                .collect(Collectors.toSet());
-
-        // Gera horarios disponiveis
-        LocalTime startTime = diary.getStartTime();
-        LocalTime endTime = diary.getEndTime();
-        int durationMinutes = diary.getDurationMinutes();
-
-        List<LocalTime> horariosDisponiveis = new ArrayList<>();
-
-        while (startTime.plusMinutes(durationMinutes).compareTo(endTime) <= 0) {
-            if (!horariosOcupados.contains(startTime)) {
-                horariosDisponiveis.add(startTime);
-            }
-            startTime = startTime.plusMinutes(durationMinutes);
-        }
-
-        System.out.println(horariosDisponiveis);
-
-        return horariosDisponiveis;
-    }
-
-    public List<AvailableTimesDTO> getDaySchedule(Long doctorId) {
-        List<DoctorDiary> diaries = diaryRepository.findByDoctorId(doctorId);
-
-        if (diaries.isEmpty()) {
-            throw new RecordNotFoundException("Nenhuma agenda encontrada para o médico com id: " + doctorId);
-        }
-
-        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);
-
-        return diaries.stream().map(diary -> {
-            DayOfWeek dayOfWeek = diary.getDayOfWeek();
-
-            Set<LocalTime> horariosOcupados = appointments.stream()
-                    .filter(appt -> appt.getDayOfWeek().equals(dayOfWeek))
-                    .map(Appointment::getTime)
-                    .collect(Collectors.toSet());
-
-            LocalTime startTime = diary.getStartTime();
-            LocalTime endTime = diary.getEndTime();
-            int durationMinutes = diary.getDurationMinutes();
-
-            List<String> timeSlots = new ArrayList<>();
-            LocalTime timePointer = startTime;
-
-            while (!timePointer.isAfter(endTime.minusMinutes(durationMinutes))) {
-                if (!horariosOcupados.contains(timePointer)) {
-                    timeSlots.add(timePointer.toString()); // formato HH:mm:ss
-                }
-                timePointer = timePointer.plusMinutes(durationMinutes);
-            }
-
-            String dayLabel = DateUtils.getDayLabel(dayOfWeek);
-
-            return new AvailableTimesDTO(dayLabel, timeSlots);
-        }).collect(Collectors.toList());
-    }
+//    public List<AvailableTimesDTO> getDaySchedule(Long doctorId) {
+//        List<DoctorDiary> diaries = diaryRepository.findByDoctorId(doctorId);
+//
+//        if (diaries.isEmpty()) {
+//            throw new RecordNotFoundException("Nenhuma agenda encontrada para o médico com id: " + doctorId);
+//        }
+//
+//        List<Appointment> appointments = appointmentRepository.findByDoctorId(doctorId);
+//
+//        return diaries.stream().map(diary -> {
+//            DayOfWeek dayOfWeek = diary.getDayOfWeek();
+//
+//            Set<LocalTime> horariosOcupados = appointments.stream()
+//                    .filter(appt -> appt.getDate().getDayOfWeek().equals(dayOfWeek))
+//                    .map(appt -> appt.getDate().toLocalTime())
+//                    .collect(Collectors.toSet());
+//
+//            LocalTime startTime = diary.getStartTime();
+//            LocalTime endTime = diary.getEndTime();
+//            int durationMinutes = diary.getDurationMinutes();
+//
+//            List<String> timeSlots = new ArrayList<>();
+//            LocalTime timePointer = startTime;
+//
+//            while (!timePointer.isAfter(endTime.minusMinutes(durationMinutes))) {
+//                if (!horariosOcupados.contains(timePointer)) {
+//                    timeSlots.add(timePointer.toString()); // formato HH:mm:ss
+//                }
+//                timePointer = timePointer.plusMinutes(durationMinutes);
+//            }
+//
+//            String dayLabel = DateUtils.getDayLabel(dayOfWeek);
+//
+//            return new AvailableTimesDTO(dayLabel, timeSlots);
+//        }).collect(Collectors.toList());
+//    }
 
 
     @Override

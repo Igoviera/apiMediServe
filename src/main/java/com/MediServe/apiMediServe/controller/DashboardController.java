@@ -18,5 +18,4 @@ public class DashboardController {
     public DashboardDTO getDashboard(){
         return dashboardService.getDashboardData();
     }
-
 }

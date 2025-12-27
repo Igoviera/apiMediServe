@@ -5,6 +5,7 @@ import com.MediServe.apiMediServe.dto.appointment.AppointmentMapper;
 import com.MediServe.apiMediServe.dto.appointment.AppointmentResponseDTO;
 import com.MediServe.apiMediServe.enums.StatusAppointment;
 import com.MediServe.apiMediServe.exception.AppointmentConflictException;
+import com.MediServe.apiMediServe.exception.BusinessException;
 import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.*;
 import com.MediServe.apiMediServe.repository.*;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.lang.IllegalArgumentException; // <-- CORRETA
 import java.time.DayOfWeek;
 import java.time.Duration;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,7 +46,9 @@ public class AppointmentServiceImp implements AppointmentService {
 
     @Override
     public AppointmentResponseDTO createAppointment(AppointmentRequestDTO appointmentRequestDTO) {
-
+        if (appointmentRequestDTO.date().isBefore(LocalDateTime.now())){
+            throw new BusinessException("Data e hora inválidas para agendamento");
+        }
         Clinic clinic = clinicRepository.findById(appointmentRequestDTO.clinicId())
                 .orElseThrow(() -> new RecordNotFoundException("Clinica não encontrada com o id: " + appointmentRequestDTO.clinicId()));
 
@@ -95,9 +99,24 @@ public class AppointmentServiceImp implements AppointmentService {
         return appointmentMapper.toDTO(appointment);
     }
 
+    @Override
+    public void finishAppoitment(Long id) {
+        Appointment appointment = appointmentRepository.findById(id)
+                .orElseThrow(() -> new RecordNotFoundException("Consulta não encontrada com id: " + id));
+
+        if (appointment.getStatusAppointment() == StatusAppointment.CONCLUIDA){
+            throw new BusinessException("Essa consulta já foi finalizada");
+        }
+
+        appointment.setStatusAppointment(StatusAppointment.CONCLUIDA);
+        appointmentRepository.save(appointment);
+    }
+
     public void validateAppointmentTime(AppointmentRequestDTO appointmentRequestDTO, Clinic clinic) {
-        var day = appointmentRequestDTO.dayOfWeek();
-        var time = appointmentRequestDTO.time();
+        var dateTime = appointmentRequestDTO.date();
+        var day = dateTime.getDayOfWeek();
+        LocalTime time = dateTime.toLocalTime();
+        int minutes = time.getMinute();
 
         boolean isSunday = day.equals(DayOfWeek.SUNDAY);
         boolean beforeOpening = time.isBefore(clinic.getOpeningTime());
@@ -109,25 +128,64 @@ public class AppointmentServiceImp implements AppointmentService {
                             clinic.getOpeningTime(), clinic.getClosingTime())
             );
         }
-    }
-
-    public void validateExistsAppointment(AppointmentRequestDTO dto, Doctor doctor) {
-        boolean exists = appointmentRepository.existsByDoctorAndDayOfWeekAndTime(doctor, dto.dayOfWeek(), dto.time());
-
-        if (exists) {
-            throw new AppointmentConflictException("O médico já possui uma consulta agendada na " + dto.dayOfWeek() + " às " + dto.time() + ".");
+        if (minutes != 0 && minutes != 30){
+            throw new AppointmentConflictException("A consulta deve ser marcada em horários com minutos 00 ou 30.");
         }
     }
 
+    public void validateExistsAppointment(AppointmentRequestDTO dto, Doctor doctor) {
+        LocalDateTime date = dto.date();
+
+        boolean exists = appointmentRepository.existsByDoctorAndDate(doctor, date);
+
+        if (exists){
+            throw new AppointmentConflictException(
+                    String.format("O médico já possui uma consulta agendada para: %s", date)
+            );
+        }
+    }
+
+    private String formatDayofWeek(DayOfWeek day) {
+        return switch (day) {
+            case MONDAY -> "segunda-feira";
+            case TUESDAY -> "terça-feira";
+            case WEDNESDAY -> "quarta-feira";
+            case THURSDAY -> "quinta-feira";
+            case FRIDAY -> "sexta-feira";
+            case SATURDAY -> "sábado";
+            case SUNDAY -> "domingo";
+        };
+    }
+
     private void validateDoctorAvailability(AppointmentRequestDTO dto, Doctor doctor) {
-        DayOfWeek day = dto.dayOfWeek();
-        LocalTime time = dto.time();
+        DayOfWeek day = dto.date().getDayOfWeek();
+        LocalTime time = dto.date().toLocalTime();
+
+        System.out.println(">> Validando disponibilidade do médico...");
+        System.out.println("Dia: " + day);
+        System.out.println("Hora da consulta: " + time);
+
+        doctor.getDiaries().forEach(diary -> {
+            System.out.println("---- Diário encontrado ----");
+            System.out.println("Dia do diário: " + diary.getDayOfWeek());
+            System.out.println("Início: " + diary.getStartTime());
+            System.out.println("Fim: " + diary.getEndTime());
+            System.out.println("Duração: " + diary.getDurationMinutes());
+
+            boolean dentroDoHorario = !time.isBefore(diary.getStartTime()) &&
+                    !time.plusMinutes(diary.getDurationMinutes()).isAfter(diary.getEndTime());
+
+            boolean alinhadoComDuracao = Duration.between(diary.getStartTime(), time).toMinutes() % diary.getDurationMinutes() == 0;
+
+            System.out.println("Está dentro do horário? " + dentroDoHorario);
+            System.out.println("Está alinhado com a duração? " + alinhadoComDuracao);
+        });
 
         doctor.getDiaries().stream()
                 .filter(d -> d.getDayOfWeek().equals(day))
                 .filter(d -> {
                     boolean dentroDoHorario = !time.isBefore(d.getStartTime()) &&
-                            time.plusMinutes(d.getDurationMinutes()).isBefore(d.getEndTime());
+                            !time.plusMinutes(d.getDurationMinutes()).isAfter(d.getEndTime());
 
                     boolean alinhadoComDuracao = Duration.between(d.getStartTime(), time).toMinutes() % d.getDurationMinutes() == 0;
 
@@ -135,8 +193,10 @@ public class AppointmentServiceImp implements AppointmentService {
                 })
                 .findFirst()
                 .orElseThrow(() ->
-                    new AppointmentConflictException("O médico não atende na " + day + " nesse horário: " + time)
+                        new AppointmentConflictException(String.format(
+                                "O médico não atende na %s nesse horário: %s", formatDayofWeek(day), time))
                 );
-
     }
+
+
 }

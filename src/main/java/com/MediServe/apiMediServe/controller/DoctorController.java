@@ -1,7 +1,9 @@
 package com.MediServe.apiMediServe.controller;
 
+import com.MediServe.apiMediServe.dto.DoctorAvailabilityResponseDTO;
 import com.MediServe.apiMediServe.dto.doctor.DoctorRequestDTO;
 import com.MediServe.apiMediServe.dto.doctor.DoctorResponseDTO;
+import com.MediServe.apiMediServe.service.DoctorAvailabilityService;
 import com.MediServe.apiMediServe.service.DoctorService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,12 +16,16 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/mediServe/doctors")
 public class DoctorController {
 
     private final DoctorService doctorService;
+    private final DoctorAvailabilityService availabilityService;
 
     @PostMapping()
     @Operation(
@@ -65,21 +71,26 @@ public class DoctorController {
         return doctorService.getByIdDoctor(id);
     }
 
-//    @PutMapping("/{id}")
-//    @Operation(
-//            summary = "Atualizar médico por ID",
-//            description = "Atualiza os dados de um médico com base no ID informado.",
-//            tags = "doctor"
-//    )
-//    @ApiResponses(value = {
-//            @ApiResponse(responseCode = "200", description = "Médico atualizado com sucesso"),
-//            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
-//            @ApiResponse(responseCode = "404", description = "Médico não encontrado"),
-//            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
-//    })
-//    public DoctorRequestDTO updateDoctor(@Valid @PathVariable("id") Long id, @RequestBody DoctorRequestDTO doctorRequestDTO){
-//        return doctorService.updateDoctor(id, doctorRequestDTO);
-//    }
+    @GetMapping("/{doctorId}/availability")
+    public DoctorAvailabilityResponseDTO getAvailability(@PathVariable Long doctorId, @RequestParam LocalDate date){
+        return availabilityService.getAvailability(doctorId, date);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Atualizar médico por ID",
+            description = "Atualiza os dados de um médico com base no ID informado.",
+            tags = "doctor"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Médico atualizado com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados inválidos"),
+            @ApiResponse(responseCode = "404", description = "Médico não encontrado"),
+            @ApiResponse(responseCode = "500", description = "Erro interno no servidor")
+    })
+    public DoctorResponseDTO updateDoctor(@PathVariable("id") Long id, @Valid @RequestBody DoctorRequestDTO doctorRequestDTO){
+        return doctorService.updateDoctor(id, doctorRequestDTO);
+    }
 
     @DeleteMapping("/{id}")
     public void remove(@PathVariable Long id){

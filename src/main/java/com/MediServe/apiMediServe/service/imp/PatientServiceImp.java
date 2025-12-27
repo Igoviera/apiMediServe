@@ -9,7 +9,7 @@ import com.MediServe.apiMediServe.exception.RecordNotFoundException;
 import com.MediServe.apiMediServe.model.Patient;
 import com.MediServe.apiMediServe.model.User;
 import com.MediServe.apiMediServe.repository.PatientRepository;
-import com.MediServe.apiMediServe.repository.UserRespository;
+import com.MediServe.apiMediServe.repository.UserRepository;
 import com.MediServe.apiMediServe.service.PatientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,12 @@ import java.util.stream.Collectors;
 public class PatientServiceImp implements PatientService {
 
     private final PatientRepository patientRepository;
-    private final UserRespository userRespository;
+    private final UserRepository userRepository;
     private final PatientMapper patientMapper;
 
     @Override
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO) {
-        if (userRespository.existsByEmail(patientRequestDTO.user().email())) {
+        if (userRepository.existsByEmail(patientRequestDTO.user().email())) {
             throw new EmailAlreadyExists();
         }
         Patient patient = patientMapper.toEntity(patientRequestDTO);
@@ -35,7 +35,7 @@ public class PatientServiceImp implements PatientService {
         User user = patient.getUser();
         user.setRole(UserRole.PACIENTE);
 
-        userRespository.save(user);
+        userRepository.save(user);
         return patientMapper.toDTO(patientRepository.save(patient));
     }
 
@@ -63,7 +63,7 @@ public class PatientServiceImp implements PatientService {
         user.setPassword(patientEntity.getUser().getPassword());
         user.setRole(UserRole.PACIENTE);
 
-        userRespository.save(user);
+        userRepository.save(user);
 
         return patientMapper.toDTO(patientRepository.save(patient));
     }

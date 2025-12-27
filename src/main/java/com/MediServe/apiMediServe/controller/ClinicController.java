@@ -30,7 +30,7 @@ public class ClinicController {
         return  clinicService.findByIdClinic(id);
     }
     @PutMapping("/{clinicId}")
-    public ClinicDTO updateClinic(@Valid @PathVariable("clinicId") Long clinicId, @RequestBody ClinicDTO clinicDTO){
+    public ClinicDTO updateClinic(@PathVariable Long clinicId, @Valid @RequestBody ClinicDTO clinicDTO){
         return clinicService.updateClinic(clinicId, clinicDTO);
     }
 }

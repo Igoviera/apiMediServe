@@ -1,6 +1,7 @@
 package com.MediServe.apiMediServe.service.imp;
 
 import com.MediServe.apiMediServe.dto.dashboardDTO.DashboardDTO;
+import com.MediServe.apiMediServe.enums.StatusAppointment;
 import com.MediServe.apiMediServe.repository.AppointmentRepository;
 import com.MediServe.apiMediServe.repository.DoctorDiaryRepository;
 import com.MediServe.apiMediServe.repository.DoctorRepository;
@@ -30,6 +31,7 @@ public class DashboardServiceImp implements DashboardService {
         long totalPatient = patientRepository.count();
         long totalDoctor = doctorRepository.count();
         long totalAppointment = appointmentRepository.count();
-        return new DashboardDTO(totalPatient, totalDoctor, totalAppointment);
+        long totalAppointmentCancel = appointmentRepository.countByStatusAppointment(StatusAppointment.CANCELADA);
+        return new DashboardDTO(totalPatient, totalDoctor, totalAppointment,totalAppointmentCancel);
     }
 }
